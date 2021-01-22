@@ -1,0 +1,7 @@
+
+xmonad.hs:159:5: warning: [-Wtabs]
+    Tab character found here, and in 56 further locations.
+    Please use spaces instead.
+    |
+159 |                         { modMask     = myModMask -- Use the "Win" key for the mod key
+    |     ^^^^

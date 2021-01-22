@@ -1,0 +1,67 @@
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sun Jan 17 17:19:14 2021
+;; Desktop file format version 208
+;; Emacs version 27.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (24580 9274 852547 885000) (desktop . "208") "root@cosmos" nil nil ((((minibuffer . t) (undecorated) (override-redirect) (font . "-ADBO-SauceCodePro Nerd Font Mono-normal-normal-normal-*-35-*-*-*-m-0-iso10646-1") (font-parameter) (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#e6e6e8") (background-color . "#212026") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 3) (right-fringe . 3) (no-special-glyphs) (scroll-bar-foreground) (scroll-bar-background) (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 24) (tool-bar-lines . 0) (title) (wait-for-wm . t) (tool-bar-position . top) (inhibit-double-buffering) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (scroll-bar-height . 16) (alpha 92 . 90) (no-focus-on-map) (no-accept-focus) (fullscreen) (visibility . t) (skip-taskbar) (z-group) (display-type . color) (background-mode . dark) (cursor-color . "#e6e6e8") (environment) (last-focus-update . t) (frameset--id . "59C1-0D08-6288-B4BD") (frameset--mini t . t) (width . 91) (modeline . t) (unsplittable) (left . 0) (top . 0) (icon-name) (display . ":0") (explicit-name)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 3) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 180) (min-pixel-width . 210) (min-pixel-height-ignore . 135) (min-pixel-width-ignore . 63) (min-pixel-height-safe . 45) (min-pixel-width-safe . 42)) leaf (pixel-width . 1920) (pixel-height . 1035) (total-width . 91) (total-height . 23) (normal-height . 1.0) (normal-width . 1.0) (buffer "init.el" (selected . t) (hscroll . 0) (fringes 3 3 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 17618) (start . 17340)) (prev-buffers ("default.nix" 1598 1704) ("init.el" 17340 17618) ("xmonad.hs" 23304 23509) ("configuration.nix" 7599 7717) ("*scratch*" 1 146))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring '("lsp" "git" "hlin" "haskell-mode-hook"))
+(setq register-alist '((48 . " S.selectSearch $ S.searchEngine \"mass\" ")))
+(setq file-name-history '(#("/etc/nixos/dotfiles/services/emacs/" 0 35 (ivy-index 0)) #("/etc/nixos/dotfiles/services/emacs/init.el" 0 42 (ivy-index 4)) #("/etc/nixos/dotfiles/services/emacs/default.nix" 0 46 (ivy-index 3)) #("/etc/nixos/dotfiles/programs/desktop/xmonad/xmonad.hs" 0 53 (ivy-index 0)) #("/etc/nixos/configuration.nix" 0 28 (ivy-index 0))))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/etc/nixos/dotfiles/services/emacs/init.el"
+  "init.el"
+  'emacs-lisp-mode
+  '(eldoc-mode which-key-mode undo-tree-mode solaire-mode smart-cursor-color-mode ivy-mode flycheck-mode company-mode highlight-numbers-mode rainbow-delimiters-mode all-the-icons-dired-mode)
+  17618
+  '(17975 nil)
+  nil
+  nil
+  '((buffer-display-time 24580 9272 965144 163000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (18018 17815 18454 18357 17815 17759 4368 4368))))
+
+(desktop-create-buffer 208
+  "/etc/nixos/dotfiles/services/emacs/default.nix"
+  "default.nix"
+  'nix-mode
+  '(which-key-mode undo-tree-mode solaire-mode smart-cursor-color-mode ivy-mode flycheck-mode company-mode highlight-numbers-mode rainbow-delimiters-mode all-the-icons-dired-mode)
+  1704
+  '(1704 nil)
+  nil
+  nil
+  '((tab-width . 2) (indent-tabs-mode) (buffer-display-time 24580 5655 20719 431000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (1739 1010 1010 520 1))))
+
+(desktop-create-buffer 208
+  "/etc/nixos/dotfiles/programs/desktop/xmonad/xmonad.hs"
+  "xmonad.hs"
+  'haskell-mode
+  '(eldoc-mode which-key-mode undo-tree-mode solaire-mode smart-cursor-color-mode ivy-mode flycheck-mode interactive-haskell-mode nix-haskell-mode company-mode highlight-numbers-mode rainbow-delimiters-mode all-the-icons-dired-mode)
+  23509
+  '(23509 nil)
+  nil
+  nil
+  '((tab-width . 8) (indent-tabs-mode) (buffer-display-time 24580 3355 995522 249000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (23526 23462 30767 30767 1931))))
+
+(desktop-create-buffer 208
+  "/etc/nixos/configuration.nix"
+  "configuration.nix"
+  'nix-mode
+  '(which-key-mode undo-tree-mode solaire-mode smart-cursor-color-mode ivy-mode flycheck-mode company-mode highlight-numbers-mode rainbow-delimiters-mode all-the-icons-dired-mode)
+  7717
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 2) (indent-tabs-mode) (buffer-display-time 24580 771 861515 583000) (buffer-file-coding-system . utf-8-unix) (overwrite-mode))
+  '((mark-ring (1))))
+

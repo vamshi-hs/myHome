@@ -1,0 +1,31 @@
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Wed Jan 13 23:18:40 2021
+;; Desktop file format version 208
+;; Emacs version 27.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (24575 12920 770554 775000) (desktop . "208") "root@cosmos" nil nil ((((minibuffer . t) (undecorated) (override-redirect) (font . "-ADBO-SauceCodePro Nerd Font Mono-normal-normal-normal-*-35-*-*-*-m-0-iso10646-1") (font-parameter . "-ADBO-SauceCodePro Nerd Font Mono-normal-normal-normal-*-35-*-*-*-m-0-iso10646-1") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#c8d3f5") (background-color . "#191a2a") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 3) (right-fringe . 3) (no-special-glyphs) (scroll-bar-foreground) (scroll-bar-background) (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 24) (tool-bar-lines . 0) (title) (wait-for-wm . t) (tool-bar-position . top) (inhibit-double-buffering) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (scroll-bar-height . 16) (alpha 92 . 90) (no-focus-on-map) (no-accept-focus) (fullscreen) (visibility . t) (skip-taskbar) (z-group) (display-type . color) (background-mode . dark) (cursor-color . "#c8d3f5") (environment) (last-focus-update . t) (frameset--id . "8EE4-B7DB-193F-DECE") (frameset--mini t . t) (width . 90) (modeline . t) (unsplittable) (left . 0) (top . 0) (icon-name) (display . ":0") (explicit-name)) ((min-height . 4) (min-width . 10) (min-height-ignore . 2) (min-width-ignore . 3) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 180) (min-pixel-width . 210) (min-pixel-height-ignore . 90) (min-pixel-width-ignore . 63) (min-pixel-height-safe . 45) (min-pixel-width-safe . 42)) leaf (pixel-width . 1915) (pixel-height . 1035) (total-width . 91) (total-height . 23) (normal-height . 1.0) (normal-width . 1.0) (buffer "xmonad.hs" (selected . t) (hscroll . 0) (fringes 3 3 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 37913) (start . 37227)) (prev-buffers ("xmonad.hs" 33154 33574) ("*scratch*" 1 146))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring '("cratchLi" "php" "scra" "bluet" "ultima10"))
+(setq register-alist '((48 . #("               , (\"bluetooth\", spawn \"kitty -e bluetoothctl\")\n" 0 17 (fontified t yank-handler (evil-yank-line-handler nil t)) 17 18 (face (rainbow-delimiters-depth-2-face) fontified t yank-handler (evil-yank-line-handler nil t)) 18 28 (face font-lock-string-face fontified t yank-handler (evil-yank-line-handler nil t)) 28 29 (face font-lock-string-face fontified t yank-handler (evil-yank-line-handler nil t)) 29 37 (fontified t yank-handler (evil-yank-line-handler nil t)) 37 54 (face font-lock-string-face fontified t yank-handler (evil-yank-line-handler nil t)) 54 59 (face font-lock-string-face fontified t yank-handler (evil-yank-line-handler nil t)) 59 60 (face font-lock-string-face fontified t yank-handler (evil-yank-line-handler nil t)) 60 61 (face (rainbow-delimiters-depth-2-face) fontified t yank-handler (evil-yank-line-handler nil t)) 61 62 (fontified t yank-handler (evil-yank-line-handler nil t))))))
+(setq file-name-history '(#("/etc/nixos/dotfiles/programs/desktop/xmonad/xmonad/" 0 51 (ivy-index 2)) #("/etc/nixos/dotfiles/programs/desktop/xmonad/xmonad.hs" 0 53 (ivy-index 9))))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/etc/nixos/dotfiles/programs/desktop/xmonad/xmonad.hs"
+  "xmonad.hs"
+  'haskell-mode
+  '(eldoc-mode which-key-mode undo-tree-mode solaire-mode smart-cursor-color-mode ivy-mode flycheck-mode interactive-haskell-mode nix-haskell-mode company-mode highlight-numbers-mode rainbow-delimiters-mode all-the-icons-dired-mode)
+  37913
+  '(38152 nil)
+  nil
+  nil
+  '((tab-width . 8) (indent-tabs-mode) (buffer-display-time 24575 12913 776216 325000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring (35687 36839 36839 37847 37933 36530 33568 33568 33574 1 1 37575 37575))))
+

@@ -1,0 +1,7 @@
+
+xmonad.hs:157:1: warning: [-Wtabs]
+    Tab character found here, and in 57 further locations.
+    Please use spaces instead.
+    |
+157 |                $ pagerHints
+    | ^^^^^^^^

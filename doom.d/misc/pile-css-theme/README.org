@@ -1,0 +1,17 @@
+#+TITLE: pile-theme
+
+Sass files for my org exporting. Taken from [[github:lepisma/pile-theme][lepisma/pile-theme]].
+
+#+NAME: om-sass
+#+BEGIN_SRC shell :exports none :results output
+sassc main.scss main.css
+#+END_SRC
+
+#+RESULTS: om-sass
+
+#+NAME: make-js
+#+BEGIN_SRC shell :exports none :results output
+cat _*.js > main.js
+#+END_SRC
+
+#+RESULTS: make-js

@@ -1,0 +1,43 @@
+;; -*- mode: emacs-lisp; lexical-binding:t; coding: utf-8-emacs; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Thu Jan 14 11:01:48 2021
+;; Desktop file format version 208
+;; Emacs version 27.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (24575 55108 734444 275000) (desktop . "208") "root@cosmos" nil nil ((((minibuffer . t) (undecorated) (override-redirect) (font . "-ADBO-SauceCodePro Nerd Font Mono-normal-normal-normal-*-35-*-*-*-m-0-iso10646-1") (font-parameter . "-ADBO-SauceCodePro Nerd Font Mono-normal-normal-normal-*-35-*-*-*-m-0-iso10646-1") (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars) (horizontal-scroll-bars) (foreground-color . "#c8d3f5") (background-color . "#191a2a") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 3) (right-fringe . 3) (no-special-glyphs) (scroll-bar-foreground) (scroll-bar-background) (menu-bar-lines . 0) (tab-bar-lines . 0) (height . 24) (tool-bar-lines . 0) (title) (wait-for-wm . t) (tool-bar-position . top) (inhibit-double-buffering) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (scroll-bar-height . 16) (alpha 92 . 90) (no-focus-on-map) (no-accept-focus) (fullscreen) (visibility . t) (skip-taskbar) (z-group) (display-type . color) (background-mode . dark) (cursor-color . "#c8d3f5") (environment) (last-focus-update . t) (frameset--id . "175F-AE99-DD37-3156") (frameset--mini t . t) (width . 91) (modeline . t) (unsplittable) (left . 0) (top . 0) (icon-name) (display . ":0") (explicit-name)) ((min-height . 4) (min-width . 10) (min-height-ignore . 2) (min-width-ignore . 3) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 180) (min-pixel-width . 210) (min-pixel-height-ignore . 90) (min-pixel-width-ignore . 63) (min-pixel-height-safe . 45) (min-pixel-width-safe . 42)) leaf (pixel-width . 1920) (pixel-height . 1035) (total-width . 91) (total-height . 23) (normal-height . 1.0) (normal-width . 1.0) (buffer "default.nix" (selected . t) (hscroll . 0) (fringes 3 3 nil nil) (margins nil) (scroll-bars nil 0 t nil 0 t nil) (vscroll . 0) (dedicated) (point . 538) (start . 1)) (prev-buffers ("NIXOS" 1 1) ("*scratch*" 1 146))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '(#("/etc/nixos/dotfiles/services/redshift/" 0 38 (ivy-index 0)) #("/etc/nixos/dotfiles/services/redshift/default.nix" 0 49 (ivy-index 2)) #("/etc/NIXOS" 0 10 (ivy-index 0))))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 208
+  "/etc/nixos/dotfiles/services/redshift/default.nix"
+  "default.nix"
+  'nix-mode
+  '(which-key-mode undo-tree-mode solaire-mode smart-cursor-color-mode ivy-mode flycheck-mode company-mode highlight-numbers-mode rainbow-delimiters-mode all-the-icons-dired-mode)
+  538
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 2) (indent-tabs-mode) (buffer-display-time 24575 55107 841922 623000) (buffer-file-coding-system . undecided-unix) (overwrite-mode))
+  '((mark-ring nil)))
+
+(desktop-create-buffer 208
+  "/etc/NIXOS"
+  "NIXOS"
+  'fundamental-mode
+  '(which-key-mode undo-tree-mode solaire-mode smart-cursor-color-mode ivy-mode company-mode all-the-icons-dired-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-display-time 24575 54922 671988 633000) (overwrite-mode))
+  '((mark-ring nil)))
+
