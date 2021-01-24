@@ -19,8 +19,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+;; (setq doom-font (font-spec :family "monospace" :size 20 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 21))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -33,15 +33,17 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type nil)
 
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 30)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 13)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
       doom-big-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 34))
+
+(setq treemacs-width 20)
 
 (after! doom-themes
   (setq doom-themes-enable-bold t
-   doom-themes-enable-italic t))
+        doom-themes-enable-italic t))
 
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
@@ -56,6 +58,10 @@
 (map! :leader
       :desc "aSave"
       "a" #'save-buffer)
+
+(map! :leader
+      :desc "run-Haskell"
+      "r" #'run-haskell)
 
 (map! :leader
       :desc "zComment"

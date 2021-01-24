@@ -11,10 +11,10 @@
      nixosConfigurations.cosmos = nixpkgs.lib.nixosSystem {
        system = "x86_64-linux";
        modules = [ 
- 		        ./dotfiles/services/picom
-			./dotfiles/services/redshift  
-			./dotfiles/services/cbatticon
-			./dotfiles/services/dunst
+ 		   ./dotfiles/services/picom
+			   ./dotfiles/services/redshift
+			   ./dotfiles/services/cbatticon
+			   ./dotfiles/services/dunst
 			./dotfiles/services/randomBackground
 			# ./dotfiles/services/emacs 
 			./dotfiles/programs/programs.nix

@@ -194,9 +194,17 @@ projects = [
             , projectDirectory = "~/"
             , projectStartHook = Just $ do  spawn "emacs"
             }
-   , Project { projectName      = "sicp"
+    , Project { projectName      = "sicp"
             , projectDirectory = "~/books"
             , projectStartHook = Just $ do  spawn "okular sicp.pdf"
+            }
+     , Project { projectName      = "luah"
+            , projectDirectory = "~/books"
+            , projectStartHook = Just $ do  spawn "okular haskell/Luah.pdf"
+            }
+     , Project { projectName      = "algo"
+            , projectDirectory = "~/books"
+            , projectStartHook = Just $ do  spawn "okular haskell/Haskell-Algo.pdf"
             }
    {- , Project { projectName      = "library"
             , projectDirectory = "~/books"
@@ -235,7 +243,7 @@ myKeys =[
        , ("M1-<Backspace>" , removeWorkspace )
        , ("M-<Backspace>" ,  killAll )
        , ("M1-<Return>" ,  namedScratchpadAction myScratchPads "kitty")
-       -- , ("M-<Return>" ,  namedScratchpadAction myScratchPads "firefox")
+       , ("M-<Return>" ,  namedScratchpadAction myScratchPads "firefox")
      ]
 
 tsDefaultConfig :: TS.TSConfig a
@@ -772,7 +780,7 @@ myKeys' :: [(String , X())]
 myKeys' = [  ("kitty" ,  namedScratchpadAction myScratchPads "kitty")-- ("trivial" , spawn "")
       -- , ("toggleFullScreen", sendMessage (Toggle "Full"))
       --, ("hide taffybar" ,  sendMessage ToggleStruts)
-      -- , ("firefox" ,  namedScratchpadAction myScratchPads "firefox")
+      , ("firefox" ,  namedScratchpadAction myScratchPads "firefox")
       , ("pSpotify",xmonadPromptC spotList ultimateXPConfig )
       , ("music" ,  namedScratchpadAction myScratchPads "spotify")
       --, ("brave" ,  namedScratchpadAction myScratchPads "brave")
@@ -858,7 +866,7 @@ myScratchPads = [
                 , NS "bluetooth"  "kitty -e bluetoothctl" (className =? "kitty")  (customFloating $ W.RationalRect (0.08) (0.07) (0.85) (0.84))
                 , NS "pulsemixer"  "kitty -e pulsemixer" (className =? "kitty")  (customFloating $ W.RationalRect (0.08) (0.07) (0.85) (0.84))
                 , NS "light"  "kitty -e sudo nvim /sys/class/backlight/intel_backlight/brightness" (className =? "kitty")  (customFloating $ W.RationalRect (0.08) (0.07) (0.85) (0.84))
-                -- , NS myBrowser1  myBrowser1 (className =? "Firefox")  (customFloating $ W.RationalRect (0.02) (0.03) (0.95) (0.93))
+                , NS myBrowser1  myBrowser1 (className =? "Firefox")  (customFloating $ W.RationalRect (0) (0) (1) (1))
                 , NS "spotify"  "spotify" (className =? "Spotify") (customFloating $ W.RationalRect (0) (0) (1) (1))
                 , NS "brave"  "brave" (className =? "brave") (customFloating $ W.RationalRect (0) (0) (1) (1))
                 , NS "emacs"  "emacs" (title =? "emacs-scratch") (customFloating $ W.RationalRect (0) (0) (1) (1))
