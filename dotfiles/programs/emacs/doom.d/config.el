@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-wilmersdorf)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -80,6 +80,32 @@
       "C-<up>"         #'+evil/window-move-up
       "C-<right>"      #'+evil/window-move-right)
 
+(use-package pdf-tools
+  :defer t
+  :commands (pdf-view-mode pdf-tools-install)
+  :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
+  :magic ("%PDF" . pdf-view-mode)
+  :config
+  (pdf-tools-install)
+  (define-pdf-cache-function pagelabels)
+  :hook ((pdf-view-mode-hook . (lambda () (display-line-numbers-mode -1)))
+         (pdf-view-mode-hook . pdf-tools-enable-minor-modes)))
+
+(use-package org-pdftools
+  :defer t
+  :hook (org-load-hook . org-pdftools-setup-link))
+
+(setq pdf-view-midnight-minor-mode t)
+
+(use-package nov
+  :defer t
+  :commands nov-mode
+  :config
+  (evil-set-initial-state 'nov-mode 'emacs)
+  :mode ("\\.epub\\'" . nov-mode))
+
+
+(setq  haskell-interactive-popup-errors nil)
 ;; (setq dante-repl-command-line  '("cabal" "v2-repl"))
 ;; (require 'nix-haskell-mode)
 ;; (add-hook 'haskell-mode-hook 'nix-haskell-mode)

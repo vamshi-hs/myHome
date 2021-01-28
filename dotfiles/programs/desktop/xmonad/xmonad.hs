@@ -202,9 +202,21 @@ projects = [
             , projectDirectory = "~/books"
             , projectStartHook = Just $ do  spawn "okular haskell/Luah.pdf"
             }
-     , Project { projectName      = "algo"
+      , Project { projectName      = "algo"
             , projectDirectory = "~/books"
             , projectStartHook = Just $ do  spawn "okular haskell/Haskell-Algo.pdf"
+            }
+      , Project { projectName      = "dm"
+            , projectDirectory = "~/books"
+            , projectStartHook = Just $ do  spawn "okular dm.pdf"
+            }
+          , Project { projectName      = "befa"
+            , projectDirectory = "~/books"
+            , projectStartHook = Just $ do  spawn "okular befa.pdf"
+            }
+          , Project { projectName      = "2"
+            , projectDirectory = "~/books"
+            , projectStartHook = Just $ do  spawn "okular 2ndYear.pdf"
             }
    {- , Project { projectName      = "library"
             , projectDirectory = "~/books"
