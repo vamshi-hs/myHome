@@ -210,13 +210,21 @@ projects = [
             , projectDirectory = "~/books"
             , projectStartHook = Just $ do  spawn "okular dm.pdf"
             }
-          , Project { projectName      = "befa"
+           , Project { projectName      = "o"
+            , projectDirectory = "~/books"
+            , projectStartHook = Just $ do  spawn "okular dmspectrum.pdf"
+            }
+           , Project { projectName      = "befa"
             , projectDirectory = "~/books"
             , projectStartHook = Just $ do  spawn "okular befa.pdf"
             }
-          , Project { projectName      = "2"
+           , Project { projectName      = "2"
             , projectDirectory = "~/books"
             , projectStartHook = Just $ do  spawn "okular 2ndYear.pdf"
+            }
+         , Project { projectName      = "3"
+            , projectDirectory = "~/books"
+            , projectStartHook = Just $ do  spawn "okular 3rdYear.pdf"
             }
    {- , Project { projectName      = "library"
             , projectDirectory = "~/books"
@@ -245,6 +253,8 @@ myKeys =[
      --  , ("M1-<Tab>",nextMatch Backward (return True))
      --  , ("S-[",      prevWS )
      --  , ("S-]",      nextWS )
+       , ("M-f" ,sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
+       , ("M1-f" ,sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
        , ("M1-[",   moveTo Prev NonEmptyWS )
        , ("M1-]",   moveTo Next NonEmptyWS )
        , ("M-q",     prevWS )
@@ -542,6 +552,9 @@ ultimateXPConfig = greenXPConfig {
                               ,  position =  CenteredAt {xpCenterY = 0.19 , xpWidth = 0.88}
                                ,  font = "xft:FiraSans:size=22"
                        }
+ultimateWindows = ultimateXPConfig {
+                                        font = "xft:FiraSans:size=27"
+                                   }
 ultima10XPConfig = ultimateXPConfig {
                                       autoComplete      = Nothing    -- set Just 100000 for .1 sec
   				, position = Top                             
@@ -778,14 +791,14 @@ myManageHook = composeOne
   ] <+> namedScratchpadManageHook myScratchPads
 --   <+> namedScratchpadManageHook myScratchPads'
 
-spotList = [("prev",audioPrev)
+spotList = [("[prev",audioPrev)
 	   ,("pausePlay",audioPlayPause)
-	   ,("next",audioNext)] 
+	   ,("]next",audioNext)]
 
 
 playerctlList :: [(String , X())]
-playerctlList = [("prev", spawn "playerctl previous")
-               ,("next", spawn "playerctl next")
+playerctlList = [("[prev", spawn "playerctl previous")
+               ,("]next", spawn "playerctl next")
 	       ,("pauseplay", spawn "playerctl play-pause")]
 
 myKeys' :: [(String , X())]
@@ -811,7 +824,7 @@ myKeys' = [  ("kitty" ,  namedScratchpadAction myScratchPads "kitty")-- ("trivia
 --      , ("ug2" ,  namedScratchpadAction myScratchPads "syllabus")
       , ("delete" , {-addName "Kill One Window" $ -} kill)
       , ("qworkspace" , {- addName "Kill WorkSpace" $ -} removeWorkspace )
-      , ("vindows", windowPrompt ultimateXPConfig Goto allWindows)
+      , ("vindows", windowPrompt ultimateWindows Goto allWindows)
     --  , ("kill all windows",  killAll)
       --, ( "vhelp" , treeselectAction tsDefaultConfig)
       --, ("myShell",  spawn "emacsclient -c -a '' --eval '(eshell)'")

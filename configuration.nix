@@ -30,7 +30,13 @@ in
   networking.hostName = "cosmos"; # Define your hostname.
   networking.wireless = {
                enable = true;  # Enables wireless support via wpa_supplicant.
-	       networks.Varikuti.pskRaw = "2f5385967f945b489e113af64fb060b86319cf195898249a8cd0189e63078cbd";
+	             networks.Varikuti.pskRaw = "2f5385967f945b489e113af64fb060b86319cf195898249a8cd0189e63078cbd";
+               networks.Kingston.pskRaw = "161c84295db49cea931a1affff403923c9d98bd31d7f0a9dc48dfddea550b76e";
+               networks.Notconnected.pskRaw = "63802bb56f299d5c08b9b55aefc31849c062d464d7f818c369cb2b038f3356a2";
+               networks.Naaaolligadda.pskRaw = "6def789ecd45d81f2e69d0a4e624cebc58d2c07b03f039abda6e43a07018cacf";
+               networks.Jeeva.pskRaw  = "3570946bac1d941302b2fa9d2b8565539dd48835be78cf7103eddf911b499bb6";
+
+        # };
        userControlled.enable = true;
   };
 
@@ -77,6 +83,9 @@ in
 			      pkgs.emacs-all-the-icons-fonts
   ];
 
+  services.gvfs.enable = true;
+services.udisks2.enable = true;
+    services.devmon.enable = true;
 
 services.xserver = 
   {

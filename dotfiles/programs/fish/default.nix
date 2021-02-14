@@ -17,6 +17,9 @@
 					up = "sudo nixos-rebuild switch";
 					del = "sudo nix-collect-garbage -d";
 					server = "php -S localhost:4000";
+          bright = "systemctl --user stop redshift.service";
+          dark = "systemctl --user restart redshift.service";
+          c = "clear";
 			};
    };
 }
