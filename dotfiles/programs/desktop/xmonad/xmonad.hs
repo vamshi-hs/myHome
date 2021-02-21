@@ -240,7 +240,7 @@ projects = [
 myKeys :: [(String,X())]
 myKeys =[
        ("S-<Return>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 2))))
-       ,  ("S-<Tab>" ,  xmonadPromptC myKeys' ultimateXPConfig ) -- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 3))))
+       , ("S-<Tab>" ,  xmonadPromptC myKeys' ultimateXPConfig ) -- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 3))))
        ,  ("S-<Space>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 4))))
        ,  ("M-<Space>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 5))))
        ,  ("M1-<Space>" ,  xmonadPromptC myKeys'  ultimateXPConfig)-- ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 5))))
@@ -266,6 +266,7 @@ myKeys =[
        , ("M-<Backspace>" ,  killAll )
        , ("M1-<Return>" ,  namedScratchpadAction myScratchPads "kitty")
        , ("M-<Return>" ,  namedScratchpadAction myScratchPads "firefox")
+       , ("M1-p" ,  namedScratchpadAction myScratchPads "firefox")
      ]
 
 tsDefaultConfig :: TS.TSConfig a
@@ -881,7 +882,8 @@ searchPrompts = [("books"    ,  S.promptSearch  ultima10XPConfig books)
       		, ("just" , S.promptSearch  ultima10XPConfig vanila )
       		, ("server" , S.promptSearchBrowser ultima10XPConfig "/run/current-system/sw/bin/brave" php )
       		, ("google" , S.promptSearch  ultima10XPConfig aiGoogle )
-      		, ("youtube" , S.promptSearchBrowser ultima10XPConfig "/run/current-system/sw/bin/brave" S.youtube )]
+      		, ("youtube" , S.promptSearch  ultima10XPConfig  S.youtube)]
+      		-- , ("youtube" , S.promptSearchBrowser ultima10XPConfig "/run/current-system/sw/bin/brave" S.youtube )]
 
 
 myScratchPads :: [NamedScratchpad]

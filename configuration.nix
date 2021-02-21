@@ -24,6 +24,7 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.plymouth.enable = true;
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -76,42 +77,43 @@ in
                 '';
    };
   fonts.fonts = with pkgs; [
-                              pkgs.google-fonts
-			      pkgs.powerline-fonts
-                              (nerdfonts.override { fonts = [  "VictorMono" "SourceCodePro" "Mononoki" ]; })
-			      pkgs.ubuntu_font_family
-			      pkgs.emacs-all-the-icons-fonts
+    pkgs.google-fonts
+    # pkgs.input-fonts
+    pkgs.vistafonts
+		 pkgs.powerline-fonts
+    (nerdfonts.override { fonts = [  "VictorMono" "SourceCodePro" "Mononoki" ]; })
+		pkgs.ubuntu_font_family
+		pkgs.emacs-all-the-icons-fonts
+    pkgs.iosevka
   ];
 
   services.gvfs.enable = true;
-services.udisks2.enable = true;
-    services.devmon.enable = true;
+  services.udisks2.enable = true;
+  services.devmon.enable = true;
 
-services.xserver = 
-  {
-     enable = true;    
-     # Configure keymap in X11
-     layout = "us";
-     xkbOptions = "eurosign:e";
-     libinput= {
-                 enable = true;
-                 naturalScrolling = true;      # Enable touchpad support (enabled default in most desktopManager).
-
-		  additionalOptions = ''
-                                       Option "AccelSpeed" "1.0"        # Mouse sensivity
-                                       Option "TapButton2" "0"          # Disable two finger tap
-                                       Option "VertScrollDelta" "-180"  # scroll sensitivity
-                                       Option "HorizScrollDelta" "-180"
-                                       Option "FingerLow" "40"          # when finger pressure drops below this value, the driver counts it as a release.
-                                       Option "FingerHigh" "70"
-                                    '';
-		 };
-     displayManager = {
-		        autoLogin.enable = true;
-                        autoLogin.user = "vamshi";
+  services.xserver =
+    {
+      enable = true;
+      # Configure keymap in X11
+      layout = "us";
+      xkbOptions = "eurosign:e";
+      libinput= {
+        enable = true;
+        naturalScrolling = true;      # Enable touchpad support (enabled default in most desktopManager).
+		    additionalOptions = ''
+                                                                      Option "AccelSpeed" "1.0"        # Mouse sensivity
+                                                                      Option "TapButton2" "0"          # Disable two finger tap
+                                                                      Option "VertScroll Delta" "-180"  # scroll sensitivity
+                                                                      Option "HorizScroll Delta" "-180"
+                                                                      Option "FingerLow" "40"          # when finger pressure drops below this value, the driver counts it as a release.
+                                                                      Option "FingerHigh" "70"
+                                                                      '';
+		  };
+      displayManager = {
+		    autoLogin.enable = true;
+        autoLogin.user = "vamshi";
 			};
-			
-/* 
+/*
           lightdm = {
             enable = true;
             greeter.enable = false;

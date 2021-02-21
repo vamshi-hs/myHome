@@ -6,6 +6,7 @@ home-manager.users.vamshi.home.packages = with pkgs;
           tree
             pcmanfm
             udiskie
+            gimp
           tmux
           brave
           exa
