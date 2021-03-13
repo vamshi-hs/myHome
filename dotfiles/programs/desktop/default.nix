@@ -3,10 +3,11 @@
                                     enable = true;
 				    enableContribAndExtras = true;
 				    extraPackages = haskellPackages: [
-				    			haskellPackages.xmonad-spotify
+				    			# haskellPackages.regex-compat
+                                          # haskellPackages.dbus-client
+                                  haskellPackages.dbus
+                                  haskellPackages.monad-logger
 				    ];
 				    config = ./xmonad/xmonad.hs;
 			};
-
-
 }

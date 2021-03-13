@@ -12,7 +12,6 @@ let
     # other python packages you want
   ]; 
   python-with-my-packages = python3.withPackages my-python-packages;
-
 in 
 {
   imports =
@@ -20,6 +19,12 @@ in
       ./hardware-configuration.nix
      # <home-manager/nixos> 
     ];
+
+  # Allow all the things
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.0.2u"
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -32,11 +37,6 @@ in
   networking.wireless = {
                enable = true;  # Enables wireless support via wpa_supplicant.
 	             networks.Varikuti.pskRaw = "2f5385967f945b489e113af64fb060b86319cf195898249a8cd0189e63078cbd";
-               networks.Kingston.pskRaw = "161c84295db49cea931a1affff403923c9d98bd31d7f0a9dc48dfddea550b76e";
-               networks.Notconnected.pskRaw = "63802bb56f299d5c08b9b55aefc31849c062d464d7f818c369cb2b038f3356a2";
-               networks.Naaaolligadda.pskRaw = "6def789ecd45d81f2e69d0a4e624cebc58d2c07b03f039abda6e43a07018cacf";
-               networks.Jeeva.pskRaw  = "3570946bac1d941302b2fa9d2b8565539dd48835be78cf7103eddf911b499bb6";
-
         # };
        userControlled.enable = true;
   };
@@ -80,13 +80,16 @@ in
     pkgs.google-fonts
     # pkgs.input-fonts
     pkgs.vistafonts
+    pkgs.font-awesome
+    pkgs.hack-font
+    pkgs.monoid
 		 pkgs.powerline-fonts
     (nerdfonts.override { fonts = [  "VictorMono" "SourceCodePro" "Mononoki" ]; })
 		pkgs.ubuntu_font_family
 		pkgs.emacs-all-the-icons-fonts
     pkgs.iosevka
   ];
-
+nixpkgs.config.allowBroken = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   services.devmon.enable = true;
@@ -96,7 +99,8 @@ in
       enable = true;
       # Configure keymap in X11
       layout = "us";
-      xkbOptions = "eurosign:e";
+      # xkbOptions = "eurosign:e";
+      xkbOptions = "caps:enter";
       libinput= {
         enable = true;
         naturalScrolling = true;      # Enable touchpad support (enabled default in most desktopManager).
@@ -109,10 +113,11 @@ in
                                                                       Option "FingerHigh" "70"
                                                                       '';
 		  };
-      displayManager = {
-		    autoLogin.enable = true;
-        autoLogin.user = "vamshi";
-			};
+       displayManager = {
+			defaultSession = "none+xmonad";
+		     	autoLogin.enable = true;
+         		autoLogin.user = "vamshi";
+			 };
 /*
           lightdm = {
             enable = true;
@@ -137,19 +142,20 @@ in
                                 '';
                         };
                 }; */
-     windowManager.xmonad = {
-                             enable = true; /*
-			     enableContribAndExtras = true;
-			     extraPackages =  haskellPackages: [
-			                        haskellPackages.xmonad-wallpaper
-					 ]; */
-			    }; 
+      windowManager.xmonad = {
+                              enable = true;
+			      /*
+		 #       enableContribAndExtras = true;
+		 #       extraPackages =  haskellPackages: [
+		 #                          haskellPackages.xmonad-wallpaper
+		 #  		 ]; */
+		       }; 
   };
 
   # Enable the GNOME 3 Desktop Environment.
   # services.xserver.enable = true;
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome3.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -164,7 +170,7 @@ in
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
- # services.emacs.enable = true;
+  #services.emacs.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vamshi = {
     isNormalUser = true;
@@ -182,9 +188,9 @@ in
   #home-manager.useGlobalPkgs = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.android_sdk.accept_license = true;
-  # Enable UPower, which is used by taffybar.
-  #services.upower.enable = true;
-  #systemd.services.upower.enable = true;
+  # # Enable UPower, which is used by taffybar.
+  # services.upower.enable = true;
+  # systemd.services.upower.enable = true;
   sound.enable = true;
   hardware.pulseaudio = {
                enable = true;
@@ -225,7 +231,7 @@ in
     sxiv
     miraclecast
     spotify
-    python-with-my-packages 
+    python-with-my-packages
     wmctrl
     moc
     hicolor-icon-theme
@@ -239,15 +245,36 @@ in
     pulsemixer
     brightnessctl
     htop
-    git
+    # git
     okular
-    ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
-   # epkgs.vterm
-		      epkgs.evil
-		      epkgs.nord-theme
-  ]))
+    (emacsWithPackages (epkgs: with emacsPackages; [
+       pdf-tools
+     ]))
+ (haskellPackages.ghcWithPackages (ps: with ps; [
+       pandoc-citeproc
+       shake         # Build tool
+       hlint         # Required for spacemacs haskell-mode
+       apply-refact  # Required for spacemacs haskell-mode
+       hasktags      # Required for spacemacs haskell-mode
+       hoogle        # Required for spacemacs haskell-mode
+       lucid 
+       # stylish-haskell # Required for spacemacs haskell-mode
+       # ^ marked as broken
+       turtle        # Scripting
+       regex-compat
+       #PyF
+       HandsomeSoup
+       tokenize
+       # chatter
+     ]))
+  #   ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
+  #  # epkgs.vterm
+	# 	      epkgs.evil
+	# 	      epkgs.nord-theme
+
+  # ]))
     neovim
-    firefox
+    # firefox
     # lang
     #ocaml
     ocaml
@@ -259,12 +286,18 @@ in
     cabal-install
     cabal2nix
     ghc
+    haskellPackages.xmobar
+    xdotool
     haskellPackages.ghcid
     haskellPackages.ghcide
     haskellPackages.Cabal_3_2_1_0
-    haskellPackages.hlint
-    haskellPackages.hoogle
-    haskellPackages.random_1_2_0
+    # haskellPackages.imalison-taffybar
+    # # notifications-tray-icon
+    # haskellPackages.status-notifier-item
+    # haskellPackages.dbus-hslogger
+    #haskellPackages.hlint
+   # haskellPackages.hoogle
+   # haskellPackages.random_1_2_0
     # JavaScript
    # nodejs
     # Hypertext Preprocessor

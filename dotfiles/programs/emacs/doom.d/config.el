@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; $$$$$DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -22,37 +22,128 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 20 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 21))
 
+;; (setq sml/no-confirm-load-theme t)
+;; ;; (setq sml/theme 'atom-one-dark)
+;; ;; (setq sml/theme 'respectful)
+;; (sml/setup)
+
+(display-time-mode 1)
+(display-battery-mode 1)
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
+(require 'spaceline-config)
+(spaceline-emacs-theme)
 (setq doom-theme 'doom-dark+)
-(setq-default mode-line-format nil)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(spaceline-compile
+  ; left side
+  '(((persp-name
+      workspace-number
+      window-number)
+     :fallback evil-state
+     :face highlight-face
+     :priority 100)
+    (anzu :priority 95)
+    auto-compile
+    ((buffer-modified buffer-size buffer-id remote-host)
+     :priority 98)
+    (major-mode :priority 79)
+    (process :when active)
+    ((flycheck-error flycheck-warning flycheck-info)
+     :when active
+     :priority 89)
+    (minor-modes :when active
+                 :priority 9)
+    (mu4e-alert-segment :when active)
+    (erc-track :when active)
+    (version-control :when active
+                     :priority 78)
+    (org-pomodoro :when active)
+    (org-clock :when active)
+    nyan-cat)
+  ; right side
+  '(which-function
+    (python-pyvenv :fallback python-pyenv)
+    (purpose :priority 94)
+    (battery :when active)
+    (selection-info :priority 95)
+    input-method
+    ((buffer-encoding-abbrev
+      point-position
+      line-column)
+     :separator " | "
+     :priority 96)
+    (global :when active)
+    (buffer-position :priority 99)
+    (hud :priority 99)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (setq-default mode-line-format nil)
+(use-package kaolin-themes
+  :config
+  ;; (load-theme 'kaolin-valley-dark t)
+  (kaolin-treemacs-theme))
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
-(set-face-attribute 'mode-line nil
-                   :background "black" ; "#353644"
-                   :foreground "black"
-                   :box '(:line-width 4 :color "black")
-                   :overline nil
-                   :underline nil)
+;; (set-face-attribute 'mode-line nil
+;;                    :background "black" ; "#353644"
+;;                    :foreground "black"
+;;                    :box '(:line-width 4 :color "black")
+;;                    :overline nil
+;;                    :underline nil)
 		   ;; :family "Source Code Pro " :height 180)
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type nil)
+(setq display-line-numbers-type 'nil)
 ;; (setq doom-dark+-padded)
 (setq doom-dark+-blue-modeline t)
-(setq doom-font (font-spec :family "inputmono" :size 28 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30))
+(setq doom-font (font-spec :family "Source Code Pro Semibold" :size 25)
+      doom-variable-pitch-font (font-spec :family "Consolas" :size 24))
       ;; doom-big-font (font-spec :family "inputmono" :size 35  :weight 'regular))
-
-(setq doom-modeline-icon nil)
+;; (use-package ewal
+;;   :init (setq ewal-use-built-in-always-p nil
+;;               ewal-use-built-in-on-failure-p t
+;;               ewal-built-in-palette "sexy-material"))
+;; (use-package ewal-spacemacs-themes
+;;   :init (progn
+;;           (setq spacemacs-theme-underline-parens t
+;;                 my:rice:font (font-spec
+;;                               :family "Source Code Pro"
+;;                               :weight 'semi-bold
+;;                               :size 11.0))
+;;           (show-paren-mode +1)
+;;           (global-hl-line-mode)
+;;           (set-frame-font my:rice:font nil t)
+;;           (add-to-list  'default-frame-alist
+;;                         `(font . ,(font-xlfd-name my:rice:font))))
+;;   :config (progn
+;;             (load-theme 'ewal-spacemacs-modern t)
+;;             (enable-theme 'ewal-spacemacs-modern)))
+;; (use-package ewal-evil-cursors
+;;   :after (ewal-spacemacs-themes)
+;;   :config (ewal-evil-cursors-get-colors
+;;            :apply t :spaceline t))
+;; (use-package spaceline
+;;   :after (ewal-evil-cursors winum)
+;;   :init (setq powerline-default-separator nil)
+;;   :config (spaceline-spacemacs-theme))
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; skp;
+;; (setq doom-font (font-spec :family "Hack" :size 32 )
+;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30))
+;; (setq doom-modeline-minor-modes t)
+;; (minions-mode 1)
+;; (setq doom-modeline-height 1)
+;; (set-face-attribute 'mode-line nil :height 100)
+;; (set-face-attribute 'mode-line-inactive nil :height 100)
+;; doom-modeline-icon nil
+;; (setq  doom-modeline-buffer-file-name-style 'truncate-except-project)
 ;; (setq doom-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 30)
 ;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
 ;;       doom-big-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 34))
 
-(setq treemacs-width 20)
+(setq treemacs-width 25)
 
 (after! doom-themes
   (setq doom-themes-enable-bold t
@@ -62,11 +153,12 @@
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 
-(display-time-mode 1)
-(display-battery-mode 1)
-
+;; (setq doom-modeline-height 1)
+(set-face-attribute 'mode-line nil :family "Source Code Pro Semibold" :height 230)
+(set-face-attribute 'mode-line-inactive nil :family "Source Code Pro Semibold" :height 230)
 ;; eshell-aliases
 (set-eshell-alias! "up" "sudo nixos-rebuild switch")
+(set-eshell-alias! "del"  "sudo nix-collect-garbage -d")
 ;(use-package nix-haskell-mode
 ;  :hook (haskell-mode . nix-haskell-mode))
 ;; KEYBINDINGS
@@ -75,12 +167,16 @@
       "a" #'save-buffer)
 
 (map! :leader
-      :desc "run-Haskell"
-      "r" #'run-haskell)
-
-(map! :leader
       :desc "zComment"
       "z" #'evilnc-comment-or-uncomment-lines)
+
+(map! :leader
+      (:prefix ("d" . "custom")
+       :desc "run-Haskell" "r" #'run-haskell
+       :desc "fold"  "f" #'+fold/toggle))
+
+(map! "M-w"
+      #'other-window)
 
 (map! :map evil-window-map
       "SPC" #'rotate-layout
@@ -242,3 +338,19 @@
     (setq fancy-splash-last-size appropriate-image)
     (setq fancy-splash-last-theme doom-theme)
     (+doom-dashboard-reload)))
+
+(add-hook 'window-size-change-functions #'set-appropriate-splash)
+(add-hook 'doom-load-theme-hook #'set-appropriate-splash)
+
+(set-frame-parameter (selected-frame) 'alpha '(92 . 90))
+
+(add-to-list 'default-frame-alist '(alpha . (92 . 90)))
+
+
+;;;;haditim
+;; ** Don't ask to quit
+(setq confirm-kill-emacs nil)
+;; ** lsp always show breadcrumb
+(setq lsp-headerline-breadcrumb-enable t)
+;; ** Start maximised (cross-platf)
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
