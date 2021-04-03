@@ -4,7 +4,7 @@ home-manager.users.vamshi.programs.starship = {
 	enableFishIntegration = true;
 	settings = {
 		character.symbol = "➜ ";
-		time.disabled = false;
+		# time.disabled = false;
 		battery.disabled = false;
 		golang.format = "via [🏎💨 $version](bold cyan) ";
   };

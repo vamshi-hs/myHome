@@ -12,7 +12,13 @@ home-manager.users.vamshi.home.packages = with pkgs;
           brave
           exa
           bat
-            # tint2
+            # taffybar
+            # xfce.xfce4-vala-panel-appmenu-plugin
+            pavucontrol
+            rofi
+            tint2
+            # pantheon.elementary-dock
+            glib
             unrar
             libreoffice
             papirus-icon-theme
@@ -24,7 +30,13 @@ home-manager.users.vamshi.home.packages = with pkgs;
             xorg.xwininfo
             xorg.xev
 		qogir-icon-theme
-		# plank
+            # binutils-unwrapped
+            # pkg-config
+            # gobjectIntrospection
+        # lambda-launcher
+		plank
+    redshift-plasma-applet
+    # latte-dock
             tcsh
             pipes
             cmatrix
@@ -35,5 +47,7 @@ home-manager.users.vamshi.home.packages = with pkgs;
             #   epkgs.ccls
             #   epkgs.lsp-haskell
             # ]))
+    # ]
+    # ++ lib.optionals config.deviceSpecific.goodMachine [
     ];
 }

@@ -8,7 +8,11 @@ let
   my-python-packages = python-packages: with python-packages; [
     #pandas
     #requests
-
+    numpy
+    matplotlib
+    # ipython
+    jupyter
+    notebook
     # other python packages you want
   ]; 
   python-with-my-packages = python3.withPackages my-python-packages;
@@ -100,7 +104,7 @@ nixpkgs.config.allowBroken = true;
       # Configure keymap in X11
       layout = "us";
       # xkbOptions = "eurosign:e";
-      xkbOptions = "caps:enter";
+      xkbOptions = "caps:swapescape";
       libinput= {
         enable = true;
         naturalScrolling = true;      # Enable touchpad support (enabled default in most desktopManager).
@@ -114,10 +118,10 @@ nixpkgs.config.allowBroken = true;
                                                                       '';
 		  };
        displayManager = {
-			defaultSession = "none+xmonad";
-		     	autoLogin.enable = true;
-         		autoLogin.user = "vamshi";
-			 };
+			 defaultSession = "none+xmonad";
+		      	autoLogin.enable = true;
+          		autoLogin.user = "vamshi";
+			  };
 /*
           lightdm = {
             enable = true;
@@ -142,20 +146,20 @@ nixpkgs.config.allowBroken = true;
                                 '';
                         };
                 }; */
-      windowManager.xmonad = {
-                              enable = true;
+       windowManager.xmonad = {
+                               enable = true;
+		       # enableContribAndExtras = true;
 			      /*
-		 #       enableContribAndExtras = true;
 		 #       extraPackages =  haskellPackages: [
 		 #                          haskellPackages.xmonad-wallpaper
 		 #  		 ]; */
-		       }; 
+		        };
   };
 
   # Enable the GNOME 3 Desktop Environment.
   # services.xserver.enable = true;
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
+ # services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -167,7 +171,8 @@ nixpkgs.config.allowBroken = true;
   # Enable sound.
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
-
+  # services.xserver.desktopManager.pantheon.enable = true;
+  # services.pantheon.apps.enable = false;
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
   #services.emacs.enable = true;
@@ -189,8 +194,8 @@ nixpkgs.config.allowBroken = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.android_sdk.accept_license = true;
   # # Enable UPower, which is used by taffybar.
-  # services.upower.enable = true;
-  # systemd.services.upower.enable = true;
+  services.upower.enable = true;
+  systemd.services.upower.enable = true;
   sound.enable = true;
   hardware.pulseaudio = {
                enable = true;
@@ -218,6 +223,8 @@ nixpkgs.config.allowBroken = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    xorg.xkbcomp
+    xorg.xmodmap
     wget 
     feh
     acpi
@@ -241,7 +248,8 @@ nixpkgs.config.allowBroken = true;
     gcc
     playerctl
     konsole
-    pavucontrol
+    # pavucontrol
+    blueman
     pulsemixer
     brightnessctl
     htop
@@ -257,7 +265,8 @@ nixpkgs.config.allowBroken = true;
        apply-refact  # Required for spacemacs haskell-mode
        hasktags      # Required for spacemacs haskell-mode
        hoogle        # Required for spacemacs haskell-mode
-       lucid 
+       lucid
+       network
        # stylish-haskell # Required for spacemacs haskell-mode
        # ^ marked as broken
        turtle        # Scripting
@@ -291,6 +300,7 @@ nixpkgs.config.allowBroken = true;
     haskellPackages.ghcid
     haskellPackages.ghcide
     haskellPackages.Cabal_3_2_1_0
+    # taffybar
     # haskellPackages.imalison-taffybar
     # # notifications-tray-icon
     # haskellPackages.status-notifier-item

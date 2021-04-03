@@ -7,8 +7,8 @@
                                         			bold_font          = "auto";
                                         			italic_font        = "auto";
                                         			bold_italic_font   = "auto";
-                                        			font_size          = "20.0";
-                                        			background_opacity = "0.8";
+                                        			font_size          = "19.0";
+                                        			background_opacity = "1.0";
 								include            = "nord.conf";
 								#include            = "./Borland.conf";
                         };

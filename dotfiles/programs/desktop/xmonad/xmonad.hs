@@ -22,7 +22,8 @@ import XMonad.Hooks.ServerMode
 --import XMonad.Hooks.ManageDocks (ToggleStruts(..))
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks,ToggleStruts(..))
 import XMonad.Hooks.InsertPosition
-
+import XMonad.Hooks.SetWMName
+ 
 import XMonad.Layout.GridVariants (Grid(Grid))
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Spiral
@@ -66,7 +67,7 @@ import XMonad.Actions.TagWindows
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CycleWindows
---import XMonad.Actions.WindowMenu
+import XMonad.Actions.WindowMenu
 import qualified XMonad.Actions.Plane as Plane
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.Minimize
@@ -86,6 +87,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.NamedWindows --(getName)
 import XMonad.Util.Scratchpad
 --import XMonad.Util.Spotify
+import XMonad.Config.Xfce
 
 import XMonad.Prompt
 import XMonad.Prompt.Shell
@@ -100,8 +102,8 @@ import XMonad.ManageHook
 -- For PagerHints
 import Codec.Binary.UTF8.String (encode)
 import Control.Monad
-import qualified DBus as D
-import qualified DBus.Client as D
+-- import qualified DBus as D
+-- import qualified DBus.Client as D
 import Data.Monoid
 import Foreign.C.Types (CInt)
 
@@ -136,7 +138,7 @@ myBrowser2 :: String
 myBrowser2 = "brave"
 
 myBorderWidth :: Dimension
-myBorderWidth = 2          -- Sets border width for windows
+myBorderWidth = 1           -- Sets border width for windows
 
 altMask = mod1Mask
 
@@ -144,20 +146,34 @@ myNormalBorderColor ::  String
 myNormalBorderColor   = "#292d3e"  -- Border color of normal windows
 
 myFocusedBorderColor  :: String   -- Border color of focused windo
-myFocusedBorderColor  = "#bbc5ff"  -- Border color of focused windows
+myFocusedBorderColor  = "#bfc5ff"  -- Border color of focused windows
 
 myLogHook :: X ()
 myLogHook = fadeInactiveLogHook fadeAmount
     where fadeAmount = 1.0
 
+quickL = [("Firefox", "firefox")
+         ,("Emacs","emacs")
+         ,("sEmacs","sudo emacs")
+         ,("bluetooth","pavucontrol")
+         ,("Terminal", "kitty")]
+         
+quickL' = ["firefox","emacs","sudo emacs","pavucontrol","kitty"]
+
+quickL'' = [("Firefox",spawn "firefox")
+           ,("Emacs",spawn "emacs")
+           ,("SMacs",spawn "sudo emacs")
+           ,("Bluetooth",spawn "pavucontrol")
+           ,("Terminal",spawn "kitty")]
+
 main :: IO()
 main = do
 
-  -- xmproc0 <- (spawnPipe "xmobar /etc/nixos/dotfiles/programs/desktop/xmobar/xmobarrc") 
-  dbus <- D.connectSession
-    -- Request access to the DBus name
-  D.requestName dbus (D.busName_ "org.xmonad.Log")
-       [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+  xmproc0 <- (spawnPipe "xmobar /etc/nixos/dotfiles/programs/desktop/xmobar/xmobarrc") 
+  -- dbus <- D.connectSession
+  --   -- Request access to the DBus name
+  -- D.requestName dbus (D.busName_ "org.xmonad.Log")
+  --      [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
   --setRandomWallpaper [ "$HOME/Pictures/wallpapers"]
   xmonad $  dynamicProjects projects
          $  withNavigation2DConfig def
@@ -167,7 +183,8 @@ main = do
                                     False
          -- $ pagerHints
          -- xmproc <- spawnPipe "xmobar  $HOME/.config/xmobar/xmobarrc"
-         $ ewmh def
+         
+         $ ewmh xfceConfig
     			{ modMask     = myModMask -- Use the "Win" key for the mod key
     			, layoutHook         =    minimize . BW.boringWindows $ showWName' myShowWNameTheme myLayoutHook  
     			, manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageDocks
@@ -183,18 +200,19 @@ main = do
     			, normalBorderColor   =  myNormalBorderColor  -- Border color of normal windows
     			, focusedBorderColor  =  myFocusedBorderColor  -- Border color of focused windows
     			, workspaces         = myWorkspaces
-                        -- , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
-                        -- { ppOutput = \x -> hPutStrLn xmproc0 x
-                        -- , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]"           -- Current workspace in xmobar
-                        -- , ppVisible = xmobarColor "#98be65" "" -- . clickable              -- Visible but not current workspace
-                        -- , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" "" -- . clickable -- Hidden workspaces in xmobar
-                        -- , ppHiddenNoWindows = xmobarColor "#c792ea" "" -- . clickable     -- Hidden workspaces (no windows)
-                        -- , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window in xmobar
-                        -- , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separators in xmobar
-                        -- , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
-                        -- , ppExtras  = [windowCount]                                     -- # of windows current workspace
-                        -- , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-                        -- }
+                        , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
+                        -- , logHook           =  ewmhDesktopsLogHook
+                        { ppOutput = \x -> hPutStrLn xmproc0 x
+                        , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]"           -- Current workspace in xmobar
+                        , ppVisible = xmobarColor "#98be65" "" -- . clickable              -- Visible but not current workspace
+                        , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" "" -- . clickable -- Hidden workspaces in xmobar
+                        , ppHiddenNoWindows = xmobarColor "#c792ea" "" -- . clickable     -- Hidden workspaces (no windows)
+                        , ppTitle = xmobarColor "#b3afc2" "" . shorten 60               -- Title of active window in xmobar
+                        , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"                    -- Separators in xmobar
+                        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"            -- Urgent workspace
+                        , ppExtras  = [windowCount]                                     -- # of windows current workspace
+                        , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+                        }
                         -- , keys = plaineKeys
                           -- 
               --, keys               = myKeys''
@@ -265,24 +283,28 @@ projects = [
        -}
   ]
 
+
 myKeys :: [(String,X())]
 myKeys =[
        ("S-<Return>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 2))))
        , ("S-<Tab>" ,  xmonadPromptC myKeys' ultimateXPConfig ) -- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 3))))
        ,  ("S-<Space>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 4))))
        ,  ("M-<Space>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 5))))
-       ,  ("M1-<Space>" ,  xmonadPromptC myKeys'  ultimateXPConfig)-- ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 5))))
+       ,  ("M1-<Space>" ,  xmonadPromptC myKeys'  ultimateXPConfig) -- ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 5))))
        --  , ("M1-<Return>",  spawn myTerminal )
        --  , ("M-<Tab>" ,  spawnSelected' myList)
        , ("M-2",  spawn "scrot")
+       , ("M-`", treeselectAction tsDefaultConfig)
        , ("M1-q" , sendMessage $ MT.Toggle NBFULL)
        , ("M1-C-o" , shellPrompt  xShellXPConfig)
        , ("M1-C-g" , S.promptSearch  ultima10XPConfig aiGoogle )
        , ("M1-o" , shellPrompt  xShellXPConfig)
-       , ("M-m", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:Ubuntu :size=14"}  layoutList)
+       , ("M-m", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  layoutList)
        -- , ("M-<Tab>" , mass)--windowMenXPConfig)
+       , ("M1-i", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  quickL'')
        -- , ("M-h" , shellPrompt  xShellXPConfig)
-       , ("M-<Tab>" ,  goToSelected  defaultGSConfig{gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:Ubuntu :size=14"}) -- mass)--windowMenu)
+       , ("M1-y" ,   windowMenu)
+       , ("M-<Tab>" ,  goToSelected  defaultGSConfig{gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=17",gs_bordercolor="black"}) -- mass)--windowMenu)
        , ("M1-<Tab>",  windows W.focusDown)-- moveTo Prev NonEmptyWS )
        , ("M1-C-q",  Plane.planeMove  (Plane.Lines 4) Plane.Finite Plane.ToUp )
        , ("M1-C-w",  Plane.planeMove  (Plane.Lines 4) Plane.Finite Plane.ToDown )
@@ -294,6 +316,7 @@ myKeys =[
      --  , ("S-]",      nextWS )
        , ("M-f" ,sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
        -- , ("M1-q" ,sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
+       , ("M1-f",sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)
        , ("M1-[",   moveTo Prev NonEmptyWS )
        , ("M1-]",   moveTo Next NonEmptyWS )
        , ("M-q",    moveTo Prev NonEmptyWS )
@@ -312,15 +335,17 @@ myKeys =[
         , ("M-S-i", incScreenSpacing 4)         -- Increase screen spacing
 
        , ("M1-<Return>" ,  namedScratchpadAction myScratchPads "kitty")
+       -- , ("M-<Return>" ,  spawnSelected' mygridConfig )--namedScratchpadAction myScratchPads "kitty")
        , ("M-<Return>" ,  namedScratchpadAction myScratchPads "kitty")
-       -- , ("M-<Return>" ,  namedScratchpadAction myScratchPads "fire1")
        -- , ("M1-p" ,  namedScratchpadAction myScratchPads "fire2")
        , ("M1-C-v" ,toggleGroupFull )
        , ("M1-C-c" ,zoomGroupIn )
-       , ("M1-C-t",groupToTabbedLayout )
-       , ("M1-C-f",groupToFullLayout )
-       , ("M1-C-n",groupToNextLayout )
+       , ("M1-C-t" ,groupToTabbedLayout )
+       , ("M1-C-f" ,groupToFullLayout )
+       , ("M1-C-n" ,groupToNextLayout )
      ]
+
+  
 myNavigation :: TwoD a (Maybe a)
 myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
  where navKeyMap = M.fromList [
@@ -345,14 +370,16 @@ myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
        navDefaultHandler = const myNavigation
 tsDefaultConfig :: TS.TSConfig a
 tsDefaultConfig = TS.TSConfig { TS.ts_hidechildren = True
-                              , TS.ts_background   = 0xdd292d3e
-                              , TS.ts_font         = myFont1
-                              , TS.ts_node         = (0xffd0d0d0, 0xff202331)
-                              , TS.ts_nodealt      = (0xffd0d0d0, 0xff292d3e)
-                              , TS.ts_highlight    = (0xffffffff, 0xff755999)
-                              , TS.ts_extra        = 0xffd0d0d0
-                              , TS.ts_node_width   = 360
-                              , TS.ts_node_height  = 40
+                              , TS.ts_background   = 0xff000000--0xdd292d3e
+                              , TS.ts_font         = "xft:SF Pro Text:style=Medium:size=18"--myFont1
+                              -- , TS.ts_node         = (0xffd0d0d0, 0xff202331)
+                              -- , TS.ts_nodealt      = (0xffd0d0d0, 0xff292d3e)
+                              , TS.ts_node         = (0xff000000, 0xffffffff)
+                              , TS.ts_nodealt      = (0xfff0000f, 0xffffffff)
+                              , TS.ts_highlight    = (0xff0000ff, 0xff000000)
+                              , TS.ts_extra        = 0xffffffff
+                              , TS.ts_node_width   = 350
+                              , TS.ts_node_height  = 50
                               , TS.ts_originX      = 0
                               , TS.ts_originY      = 0
                               , TS.ts_indent       = 80
@@ -365,12 +392,13 @@ myTreeNavigation = M.fromList
     , ((0, xK_space),    TS.select)
     , ((0, xK_Up),       TS.movePrev)
     , ((0, xK_Down),     TS.moveNext)
+    -- , ((0, xK_Down),     TS.moveNext)
     , ((0, xK_Left),     TS.moveParent)
     , ((0, xK_Right),    TS.moveChild)
     , ((0, xK_k),        TS.movePrev)
     , ((0, xK_j),        TS.moveNext)
-    , ((0, xK_h),        TS.moveParent)
-    , ((0, xK_l),        TS.moveChild)
+    , ((0, xK_u),        TS.moveParent)
+    , ((0, xK_n),        TS.moveChild)
     , ((0, xK_o),        TS.moveHistBack)
     , ((0, xK_i),        TS.moveHistForward)
    ]
@@ -379,15 +407,33 @@ myTreeNavigation = M.fromList
 treeselectAction :: TS.TSConfig (X ()) -> X ()
 treeselectAction a = TS.treeselectAction a
   [
-   Node (TS.TSNode " + Scratchpads" "" (return ()))
-   [  Node (TS.TSNode "kitty" "Drop down terminal" (spawn "kitty")) []
-  , Node (TS.TSNode "firefox" "Drop down browser"   (  namedScratchpadAction myScratchPads "firefox"))[]
-   , Node (TS.TSNode "music" "Drop down spotify"   (  namedScratchpadAction myScratchPads "spotify"))[]
+    Node (TS.TSNode "+Run" "Run anything" (return ()))
+    [ Node (TS.TSNode "Shell" "Bash shell" ( shellPrompt  xShellXPConfig))[]
+    ,  Node (TS.TSNode "RunOrRaise" "Run" ( runOrRaisePrompt  xShellXPConfig))[]
+    ] 
+  , Node (TS.TSNode "+Most used" "" (return ()))
+   [  Node (TS.TSNode "Kitty" "Drop down terminal" (spawn "kitty")) []
+  , Node (TS.TSNode "Firefox" "Drop down browser"   (spawn "firefox"))[]
+  , Node (TS.TSNode "Emacs" "Drop down editor"   (spawn "emacs"))[]
+  , Node (TS.TSNode "sEmacs" "Drop down editor(root)"   (spawn "sudo emacs"))[]
+   , Node (TS.TSNode "Spotify" "Drop down spotify"   (  namedScratchpadAction myScratchPads "spotify"))[]
     ]
+  , Node(TS.TSNode "+Search" "" (return()))
+  [ Node (TS.TSNode "Books" "Gen . lib . rus" ( S.promptSearch   xShellXPConfig books))[]
+  , Node (TS.TSNode "Store" "Nixos store" (S.promptSearch   xShellXPConfig nixos))[]
+  , Node (TS.TSNode "https:" "vanila" (S.promptSearch   xShellXPConfig vanila))[]
+  , Node (TS.TSNode "Google" "google search" (S.promptSearch   xShellXPConfig aiGoogle))[]
+  , Node (TS.TSNode "Youtube" "videos" (S.promptSearch   xShellXPConfig S.youtube))[]
+   ]
+  , Node(TS.TSNode "+Utilites" "" (return()))
+  [
+    
+   Node (TS.TSNode "Redshift" "brightness" ( runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  redshift))[]
+  ]
    , Node (TS.TSNode " + Exit" "" (return ()))
-   [  Node (TS.TSNode "kitty" "Drop down terminal" (spawn "kitty")) []
-  , Node (TS.TSNode "firefox" "Drop down browser"   (  namedScratchpadAction myScratchPads "firefox"))[]
-   , Node (TS.TSNode "music" "Drop down spotify"   (  namedScratchpadAction myScratchPads "spotify"))[]
+   [  Node (TS.TSNode "Shutdown" "switch off the computer"  ( confirmPrompt xShellXPConfig' "shutdown" $ spawn "poweroff"))[]
+  , Node (TS.TSNode "Restart" "Restart the computer"   (  confirmPrompt xShellXPConfig' "restart" $ spawn "reboot"))[]
+   , Node (TS.TSNode "Logout" "Logout of xmonad"   (   confirmPrompt xShellXPConfig' "exit" $ io $ exitWith ExitSuccess))[]
     ]
   ]
 
@@ -409,13 +455,25 @@ myList = [("Shift+Return  Main menu","")
          ,("Mod4+2        Screenshot",""   )
          ]
 
-myColorizer :: Window -> Bool -> X (String, String)
+-- myColorizer ::  Bool -> X (String, String)
 myColorizer = colorRangeFromClassName
                   (0x28,0x2c,0x34) -- lowest inactive bg
                   (0x28,0x2c,0x34) -- highest inactive bg
                   (0xc7,0x92,0xea) -- active bg
                   (0xc0,0xa7,0x9a) -- inactive fg
                   (0x28,0x2c,0x34) -- active fg
+
+
+-- gridSelect menu layout
+mygridConfig :: p -> GSConfig Window
+mygridConfig colorizer = (buildDefaultGSConfig myColorizer)
+    { gs_cellheight   = 40
+    , gs_cellwidth    = 200
+    , gs_cellpadding  = 6
+    , gs_originFractX = 0.5
+    , gs_originFractY = 0.5
+    , gs_font         =  "xft:SF Pro Text:style=Medium:size=22"
+    }
 
 colorizer :: a -> Bool -> X (String, String)
 colorizer _ isFg = do
@@ -425,25 +483,25 @@ colorizer _ isFg = do
                 then (fBC, nBC)
                 else (nBC, fBC)
 
-windowMenu :: X ()
-windowMenu = withFocused $ \w -> do
-    tags <- asks (workspaces . config)
-    Rectangle x y wh ht <- getSize w
-    Rectangle sx sy swh sht <- gets $ screenRect . W.screenDetail . W.current . windowset
-    let originFractX = (fi x - fi sx + fi wh / 2) / fi swh
-        originFractY = (fi y - fi sy + fi ht / 2) / fi sht
-        gsConfig = (buildDefaultGSConfig colorizer)
-                    { gs_originFractX = originFractX
-                    , gs_originFractY = originFractY }
-        actions = [ ("rotUnfocusedUp" , rotUnfocusedUp)
-                  , ("Cancel menu", return ())
-                  , ("Close"      , kill)
-  --                , ("Maximize"   , sendMessage $ maximizeRestore w)
-                  , ("Minimize"   , minimizeWindow w)
-                  ] ++
-                  [ ("Move to " ++ tag, windows $ W.shift tag)
-                    | tag <- tags ]
-    runSelectedAction gsConfig actions
+-- windowMenu :: X ()
+-- windowMenu = withFocused $ \w -> do
+--     tags <- asks (workspaces . config)
+--     Rectangle x y wh ht <- getSize w
+--     Rectangle sx sy swh sht <- gets $ screenRect . W.screenDetail . W.current . windowset
+--     let originFractX = (fi x - fi sx + fi wh / 2) / fi swh
+--         originFractY = (fi y - fi sy + fi ht / 2) / fi sht
+--         gsConfig = (buildDefaultGSConfig colorizer)
+--                     { gs_originFractX = originFractX
+--                     , gs_originFractY = originFractY }
+--         actions = [ ("rotUnfocusedUp" , rotUnfocusedUp)
+--                   , ("Cancel menu", return ())
+--                   , ("Close"      , kill)
+--   --                , ("Maximize"   , sendMessage $ maximizeRestore w)
+--                   , ("Minimize"   , minimizeWindow w)
+--                   ] ++
+--                   [ ("Move to " ++ tag, windows $ W.shift tag)
+--                     | tag <- tags ]
+--     runSelectedAction gsConfig actions
 
 getSize :: Window -> X (Rectangle)
 getSize w = do
@@ -455,15 +513,15 @@ getSize w = do
       ht = fi $ wa_height wa
   return (Rectangle x y wh ht)
 -- gridSelect menu layout
-mygridConfig :: p -> GSConfig Window
-mygridConfig colorizer = (buildDefaultGSConfig myColorizer)
-    { gs_cellheight   = 40
-    , gs_cellwidth    = 200
-    , gs_cellpadding  = 6
-    , gs_originFractX = 0.5
-    , gs_originFractY = 0.5
-    , gs_font         = myFont
-    }
+-- mygridConfig :: p -> GSConfig Window
+-- mygridConfig colorizer = (buildDefaultGSConfig myColorizer)
+--     { gs_cellheight   = 40
+--     , gs_cellwidth    = 200
+--     , gs_cellpadding  = 6
+--     , gs_originFractX = 0.5
+--     , gs_originFractY = 0.5
+--     , gs_font         = myFont
+--     }
 {-myMass =  def   { gs_cellheight   = 150
                    , gs_cellwidth    = 340
                    , gs_cellpadding  = 6
@@ -623,31 +681,40 @@ switchXPConfig = amberXPConfig {
 
                       }
 ultimateXPConfig = greenXPConfig {
-
                                autoComplete      = Just 100000    -- set Just 100000 for .1 sec
-                               , height            = 60
-                              ,  position =  CenteredAt {xpCenterY = 0.29 , xpWidth = 0.68}
-                               ,  font = "xft:FiraSans:size=21"
-                                , promptKeymap        = vimLikeXPKeymap
+                               , height            = 80
+                               -- ,fgColor = "green"
+                               ,  position =  CenteredAt {xpCenterY = 0.29 , xpWidth = 0.68}
+                               , promptBorderWidth = 0
+                                ,  font = "xft:FiraSans:size=21"
+                                -- , font = "xft:SF Pro Display:style=Regular:size=21"
+                                -- font = "xft:"
+                               -- , font = "xft:SF Pro Text:style=Medium:size=21"
+                               , promptKeymap        = vimLikeXPKeymap
                        }
 ultimateWindows = ultimateXPConfig {
                                         font = "xft:FiraSans:size=24"
                                    , height            = 100
                                    }
 ultima10XPConfig = ultimateXPConfig {
-                                      autoComplete      = Nothing    -- set Just 100000 for .1 sec
-  				, position = Top                             
-                               ,  font = "xft:FiraSans:size=20"
-                                   , height            = 40
+                                    autoComplete      = Nothing    -- set Just 100000 for .1 sec
+  				    , position = Top                             
+                                    ,  font = "xft:FiraSans:size=20"
+                                    , height            = 40
                                     }
 xShellXPConfig = ultima10XPConfig {
                                         
-                                 font = "xft:FiraSans:size=26"
-  				, position = Top                             
-                                -- ,        position =  CenteredAt {xpCenterY = 0.08 , xpWidth = 1.0}
-                                ,  height            = 120
+                               fgColor = "#ffffff"
+                                , font = "xft:SF Pro Text:style=Medium:size=22"
+  				 -- , position = Top                             
+                                , position =  CenteredAt {xpCenterY = 0.18 , xpWidth = 0.6}
+                               , borderColor = "#0f0f0f"
+                                ,  height            = 82
+                               , promptBorderWidth =2
                                   }
-                 
+xShellXPConfig' = xShellXPConfig {               
+                                         autoComplete      = Just 100000    -- set Just 100000 for .1 sec
+                               }
 -- dtXPKeymap :: M.Map (KeyMask,KeySym) (XP ())
 -- dtXPKeymap = M.fromList $
 --      map (first $ (,) controlMask)      -- control + <key>
@@ -904,7 +971,7 @@ layoutList = [("wmiiL", sendMessage $ JumpToLayout "wmiiL")
              , ("threeRow", sendMessage $ JumpToLayout "threeRow")
              ]
 
-layoutAction =[("layoutList" , xmonadPromptC layoutList penUltiXPConfig)
+layoutAction =[("layoutList" , xmonadPromptC layoutList xShellXPConfig')
               , ("nextLayout", sendMessage NextLayout)    --("prevLayout", sendMessage PrevLayout)           -- Switch to next layout
               -- Switch to next layout
         , ("arrange", sendMessage Arrange)
@@ -928,7 +995,9 @@ layoutAction =[("layoutList" , xmonadPromptC layoutList penUltiXPConfig)
 myStartupHook :: X ()
 myStartupHook = do
                     spawn "brightnessctl s 1"
-
+                    spawn "xmodmap -e \"keycode 105 = KP_Enter \""
+                    setWMName "LG3D"
+                     
 myManageHook :: ManageHook
 myManageHook = composeOne
   [ className =? "Pidgin" -?> doFloat
@@ -952,34 +1021,36 @@ playerctlList = [("[prev", spawn "playerctl previous")
 	       ,("pauseplay", spawn "playerctl play-pause")]
 
 quitList = [
-       ("allDelete" , killAll)
+       ("anDelete" , kill)
       , ("workspace" , {- addName "Kill WorkSpace" $ -} removeWorkspace )
-      , ("supress" , {-addName "Kill One Window" $ -} kill)
+      , ("supressAll" , {-addName "Kill One Window" $ -} killAll)
            ]
 
 exitList =  [
-  ("shutdown", confirmPrompt ultima10XPConfig "shutdown" $ spawn "poweroff")
-      , ("reboot", confirmPrompt ultima10XPConfig "restart" $ spawn "reboot")
-      , ("logout",confirmPrompt ultima10XPConfig "exit" $ io $ exitWith ExitSuccess)
+  ("shutdown", confirmPrompt xShellXPConfig' "shutdown" $ spawn "poweroff")
+      , ("reboot", confirmPrompt xShellXPConfig' "restart" $ spawn "reboot")
+      , ("logout",confirmPrompt xShellXPConfig' "exit" $ io $ exitWith ExitSuccess)
       ]
 
 inputList = [
-                ("kitty",prompt ("kitty" ++ " -e") ultima10XPConfig )
-            ,("firefox",safePrompt "firefox" ultima10XPConfig )
+                ("kitty",prompt ("kitty" ++ " -e") xShellXPConfig )
+            ,("firefox",safePrompt "firefox" xShellXPConfig )
             ]
 
 myKeys' :: [(String , X())]
 myKeys' = [
 
-       ("activeWindows", windowPrompt ultimateWindows Goto allWindows)
-      , ("configuration",xmonadPromptC settings penUltiXPConfig )
+       ("activeWindows",  windowPrompt xShellXPConfig Goto allWindows)
+      , ("configuration",xmonadPromptC settings xShellXPConfig' )
       -- , ("doomEmacs",editPrompt "/home/vamshi/")
-      , ("exit" , xmonadPromptC exitList penUltiXPConfig)
+      , ("exit" , xmonadPromptC exitList xShellXPConfig')
+      -- , ("exit" , runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  exitList)
       -- , ("firefox" ,  namedScratchpadAction myScratchPads "fire1")
-      , ("gotoProject" , switchProjectPrompt  penUltiXPConfig)
-      , ("input",xmonadPromptC inputList penUltiXPConfig)
+      , ("fullScreen", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
+      , ("gotoProject" , switchProjectPrompt  xShellXPConfig')
+      , ("input", xmonadPromptC inputList xShellXPConfig')
       , ("kitty" ,  namedScratchpadAction myScratchPads "kitty")-- ("trivial" , spawn "")
-      , ("layouts" , xmonadPromptC layoutAction  penUltiXPConfig)
+      , ("layouts" , xmonadPromptC layoutAction  xShellXPConfig')
       --, ("hide taffybar" ,  sendMessage ToggleStruts)
       --, ("",xmonadPromptC spotList ultimateXPConfig )
       , ("music" ,  namedScratchpadAction myScratchPads "spotify")
@@ -987,6 +1058,7 @@ myKeys' = [
       --, ("oCust", xmonadPromptC custList ultimateXPConfig)
      -- , ("jList", xmonadPromptC webList ultimateXPConfig)
       , ("play", xmonadPromptC playerctlList ultimateXPConfig)
+           , ("C-t t", treeselectAction tsDefaultConfig)
 --      , ("ug2" ,  namedScratchpadAction myScratchPads "syllabus")
     --  , ("kill all windows",  killAll)
       --, ( "vhelp" , treeselectAction tsDefaultConfig)
@@ -997,33 +1069,35 @@ myKeys' = [
  --     , ("M-2", addName "capture screen" $ spawn "scrot")
  --     ,  ("exrestart" ,spawn "xmonad --recompile ; xmonad --restart")
   --    ,  ("xmonadPrompt", xmonadPromptC xmonadEdit ultima2XPConfig)
-      , ("quit" , xmonadPromptC quitList penUltiXPConfig)
-      , ("runOrRaise" , runOrRaisePrompt ultima10XPConfig)
-      , ("search" , xmonadPromptC searchPrompts penUltiXPConfig)
-      , ("throwToProject" , shiftToProjectPrompt  penUltiXPConfig)
+      , ("quit" , xmonadPromptC quitList xShellXPConfig')
+      , ("runOrRaise" , runOrRaisePrompt xShellXPConfig)
+      , ("search" , xmonadPromptC searchPrompts xShellXPConfig')
+      , ("throwToProject" , shiftToProjectPrompt  xShellXPConfig')
       , ("utilities" , xmonadPromptC  scratchList penUltiXPConfig)
-        , ("window", xmonadPromptC windowList penUltiXPConfig)
+        , ("window", xmonadPromptC windowList xShellXPConfig')
         , ("onWhatsapp",S.selectSearch whatsapp)
       -- , ("xmonadConfig" , spawn "emacs /etc/nixos/dotfiles/xmonad/README.org")
       , ("Tutorial" ,  S.selectSearchBrowser "/run/current-system/sw/bin/brave" tutorial)
       {-, ("aMenu",windowMenu) -}
       --, ("h", mass)
-        
        , ("xshell" , shellPrompt  xShellXPConfig)
      ]
-
+redshift  = [
+            ("dark",spawn "systemctl --user restart redshift.service")
+            , ("bright",spawn "systemctl --user stop redshift.service")
+            ]
 settings = [("dark",spawn "systemctl --user restart redshift.service")
             , ("bright",spawn "systemctl --user stop redshift.service")
-               , ("sound", spawn "kitty -e pulsemixer")
-                , ("light" ,  namedScratchpadAction myScratchPads "light")
+            , ("sound", spawn "kitty -e pulsemixer")
+            , ("light" ,  namedScratchpadAction myScratchPads "light")
             ]
 
-searchPrompts = [("books"    ,  S.promptSearch  ultima10XPConfig books)
-      		, ("playStore" , S.promptSearch  ultima10XPConfig nixos )
-      		, ("just" , S.promptSearch  ultima10XPConfig vanila )
-      		, ("server" , S.promptSearchBrowser ultima10XPConfig "/run/current-system/sw/bin/brave" php )
-      		, ("google" , S.promptSearch  ultima10XPConfig aiGoogle )
-      		, ("youtube" , S.promptSearch  ultima10XPConfig  S.youtube)]
+searchPrompts = [("books"    ,  S.promptSearch   xShellXPConfig books)
+      		, ("playStore" , S.promptSearch   xShellXPConfig nixos )
+      		, ("just" , S.promptSearch   xShellXPConfig vanila )
+      		, ("server" , S.promptSearchBrowser  xShellXPConfig "/run/current-system/sw/bin/brave" php )
+      		, ("google" , S.promptSearch   xShellXPConfig aiGoogle )
+      		, ("youtube" , S.promptSearch  xShellXPConfig  S.youtube)]
       		-- , ("youtube" , S.promptSearchBrowser ultima10XPConfig "/run/current-system/sw/bin/brave" S.youtube )]
 
 myScratchPads :: [NamedScratchpad]

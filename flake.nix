@@ -4,6 +4,7 @@
   inputs = {
     	 nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
          nix-doom-emacs.url = "github:vlaci/nix-doom-emacs";
+         # lambda-launcher.url = "github:balsoft/lambda-launcher";
          home-manager.url = "github:nix-community/home-manager";
   };
   outputs = {home-manager,nix-doom-emacs,self, nixpkgs}: {
@@ -11,18 +12,22 @@
      nixosConfigurations.cosmos = nixpkgs.lib.nixosSystem {
        system = "x86_64-linux";
        modules = [ 
- 		    ./dotfiles/services/picom
-			    ./dotfiles/services/redshift
-			    ./dotfiles/services/cbatticon
-			    ./dotfiles/services/dunst
-			    ./dotfiles/services/polybar
-			 ./dotfiles/services/randomBackground
-			# ./dotfiles/services/taffybar
-			./dotfiles/programs/programs.nix
-			 ./dotfiles/programs/desktop
-			 # ./dotfiles/programs/gtk
-			 #./dotfiles/programs/emacs
-			./dotfiles/programs/fish
+ 		  #   ./dotfiles/services/picom
+ 		  #   ./dotfiles/services/statusWatcher
+        ./dotfiles/services/redshift
+        ./dotfiles/services/cbatticon
+        ./dotfiles/services/dunst
+        ./dotfiles/services/spotifyd
+        ./dotfiles/services/staloneTray
+        # ./dotfiles/services/polybar
+      ./dotfiles/services/randomBackground
+    # ./dotfiles/services/taffybar
+    ./dotfiles/programs/programs.nix
+      ./dotfiles/programs/desktop
+      ./dotfiles/programs/man
+      # ./dotfiles/programs/gtk
+      #./dotfiles/programs/emacs
+    ./dotfiles/programs/fish
 			./dotfiles/programs/starship
 			./dotfiles/programs/rtorrent
 			./dotfiles/programs/kitty
