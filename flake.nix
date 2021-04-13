@@ -18,9 +18,9 @@
         ./dotfiles/services/cbatticon
         ./dotfiles/services/dunst
         ./dotfiles/services/spotifyd
-        ./dotfiles/services/staloneTray
+        # ./dotfiles/services/staloneTray
         # ./dotfiles/services/polybar
-      ./dotfiles/services/randomBackground
+      # ./dotfiles/services/randomBackground
     # ./dotfiles/services/taffybar
     ./dotfiles/programs/programs.nix
       ./dotfiles/programs/desktop

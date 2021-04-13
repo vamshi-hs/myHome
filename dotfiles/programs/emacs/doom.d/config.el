@@ -29,61 +29,78 @@
 
 (display-time-mode 1)
 (display-battery-mode 1)
+;; (setq cycle-themes-theme-list
+      ;; '(leuven monokai solarized-dark))
+
+;; (require 'cycle-themes)
+;; (cycle-themes-mode)
+;; (setq cycle-themes-theme-list
+      ;; '(leuven monokai solarized-dark) )
+;; (cycle-themes-mode)
+
+;; (use-package cycle-themes
+  ;; :ensure t
+;;   :init (setq cycle-themes-theme-list
+;;               '(doom-one doom-solarized-dark doom-horizon doom-wilmersdorf))
+  ;; :config (cycle-themes-mode))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(require 'spaceline-config)
-(spaceline-emacs-theme)
-(setq doom-theme 'doom-dark+)
+;; (require 'spaceline-config)
+;; (spaceline-emacs-theme)
+;; (setq doom-theme 'doom-horizon)
+;; (telephone-line-mode 1)
+;; (require 'modeline-common)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(spaceline-compile
-  ; left side
-  '(((persp-name
-      workspace-number
-      window-number)
-     :fallback evil-state
-     :face highlight-face
-     :priority 100)
-    (anzu :priority 95)
-    auto-compile
-    ((buffer-modified buffer-size buffer-id remote-host)
-     :priority 98)
-    (major-mode :priority 79)
-    (process :when active)
-    ((flycheck-error flycheck-warning flycheck-info)
-     :when active
-     :priority 89)
-    (minor-modes :when active
-                 :priority 9)
-    (mu4e-alert-segment :when active)
-    (erc-track :when active)
-    (version-control :when active
-                     :priority 78)
-    (org-pomodoro :when active)
-    (org-clock :when active)
-    nyan-cat)
-  ; right side
-  '(which-function
-    (python-pyvenv :fallback python-pyenv)
-    (purpose :priority 94)
-    (battery :when active)
-    (selection-info :priority 95)
-    input-method
-    ((buffer-encoding-abbrev
-      point-position
-      line-column)
-     :separator " | "
-     :priority 96)
-    (global :when active)
-    (buffer-position :priority 99)
-    (hud :priority 99)))
+;; (spaceline-compile
+;;   ; left side
+;;   '(((persp-name
+;;       workspace-number
+;;       window-number)
+;;      :fallback evil-state
+;;      :face highlight-face
+;;      :priority 100)
+;;     (anzu :priority 95)
+;;     auto-compile
+;;     ((buffer-modified buffer-size buffer-id remote-host)
+;;      :priority 98)
+;;     (major-mode :priority 79)
+;;     (process :when active)
+;;     ((flycheck-error flycheck-warning flycheck-info)
+;;      :when active
+;;      :priority 89)
+;;     (minor-modes :when active
+;;                  :priority 9)
+;;     (mu4e-alert-segment :when active)
+;;     (erc-track :when active)
+;;     (version-control :when active
+;;                      :priority 78)
+;;     (org-pomodoro :when active)
+;;     (org-clock :when active)
+;;     nyan-cat)
+;;   ; right side
+;;   '(which-function
+;;     (python-pyvenv :fallback python-pyenv)
+;;     (purpose :priority 94)
+;;     (battery :when active)
+;;     (selection-info :priority 95)
+;;     input-method
+;;     ((buffer-encoding-abbrev
+;;       point-position
+;;       line-column)
+;;      :separator " | "
+;;      :priority 96)
+;;     (global :when active)
+;;     (buffer-position :priority 99)
+;;     (hud :priority 99)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (setq-default mode-line-format nil)
-(use-package kaolin-themes
-  :config
-  ;; (load-theme 'kaolin-valley-dark t)
-  (kaolin-treemacs-theme))
+;; (use-package kaolin-themes
+;; :config
+;; (load-theme 'kaolin-ocean t)
+;; (kaolin-treemacs-theme))
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
@@ -98,10 +115,13 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'nil)
 ;; (setq doom-dark+-padded)
-(setq doom-dark+-blue-modeline t)
-(setq doom-font (font-spec :family "Source Code Pro Semibold" :size 25)
-      doom-variable-pitch-font (font-spec :family "Consolas" :size 24))
-      ;; doom-big-font (font-spec :family "inputmono" :size 35  :weight 'regular))
+;; (setq doom-dark+-blue-modeline t)
+;; (setq doom-font (font-spec :family "Courier Prime" :size 22)
+      ;; doom-variable-pitch-font (font-spec :family "Source Code Pro Semibold" :size 22))
+;; doom-big-font (font-spec :family "inputmono" :size 35  :weight 'regular))
+;;
+;; (set-face-attribute 'default nil :font "Source Code Pro Semibold" :height 280)
+
 ;; (use-package ewal
 ;;   :init (setq ewal-use-built-in-always-p nil
 ;;               ewal-use-built-in-on-failure-p t
@@ -137,11 +157,17 @@
 ;; (setq doom-modeline-height 1)
 ;; (set-face-attribute 'mode-line nil :height 100)
 ;; (set-face-attribute 'mode-line-inactive nil :height 100)
-;; doom-modeline-icon nil
+;; (setq doom-modeline-icon nil)
+(setq doom-modeline-height 1)
+(set-face-attribute 'mode-line nil :height 10)
+(set-face-attribute 'mode-line-inactive nil :height 10)
 ;; (setq  doom-modeline-buffer-file-name-style 'truncate-except-project)
-;; (setq doom-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 30)
-;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 30)
-;;       doom-big-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 34))
+;; (setq doom-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 20)
+;; doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
+;; doom-big-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 24))
+(setq doom-font (font-spec :family "Source Code Pro Semibold" :size 24)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 22)
+      doom-big-font (font-spec :family "Source Code Pro Semibold" :size 30))
 
 (setq treemacs-width 25)
 
@@ -173,6 +199,8 @@
 (map! :leader
       (:prefix ("d" . "custom")
        :desc "run-Haskell" "r" #'run-haskell
+       :desc "run-Python" "p" #'run-python
+       :desc "themes" "t" #'cycle-themes
        :desc "fold"  "f" #'+fold/toggle))
 
 (map! "M-w"

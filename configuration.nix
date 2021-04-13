@@ -13,6 +13,7 @@ let
     # ipython
     jupyter
     notebook
+    # jupyter_core
     # other python packages you want
   ]; 
   python-with-my-packages = python3.withPackages my-python-packages;
@@ -154,6 +155,13 @@ nixpkgs.config.allowBroken = true;
 		 #                          haskellPackages.xmonad-wallpaper
 		 #  		 ]; */
 		        };
+      #  windowManager.awesome = {
+      #    enable = true;
+      #    luaModules = with pkgs.luaPackages; [
+      #   luarocks # is the package manager for Lua modules
+      #   # luadbi-mysql # Database abstraction layer
+      # ];
+      #  };
   };
 
   # Enable the GNOME 3 Desktop Environment.

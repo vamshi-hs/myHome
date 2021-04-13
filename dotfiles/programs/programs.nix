@@ -10,15 +10,30 @@ home-manager.users.vamshi.home.packages = with pkgs;
           vscode
           tmux
           brave
-          exa
-          bat
             # taffybar
             # xfce.xfce4-vala-panel-appmenu-plugin
             pavucontrol
             rofi
             tint2
+          #rust
+          exa
+          bat
+          rsclock
+          ripgrep
+          tokei
+            fd
+            procs
+            # ytop
+            tealdeer
+            bandwhich
+            grex
+            zoxide
+            # nushell
             # pantheon.elementary-dock
             glib
+            dzen2
+            fzf
+            clipmenu
             unrar
             libreoffice
             papirus-icon-theme
@@ -34,12 +49,16 @@ home-manager.users.vamshi.home.packages = with pkgs;
             # pkg-config
             # gobjectIntrospection
         # lambda-launcher
-		plank
+		# plank
     redshift-plasma-applet
     # latte-dock
             tcsh
             pipes
             cmatrix
+            # c
+            bison
+            flex
+            killall
             # ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
             #   # epkgs.vterm
 		        #   # epkgs.evil
