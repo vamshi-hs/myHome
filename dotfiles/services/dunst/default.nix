@@ -18,10 +18,10 @@
         monitor = 0;
         geometry = "600x50-50+65";
         shrink = "yes";
-        transparency = 10;
+        transparency = 0;
         padding = 16;
         horizontal_padding = 16;
-        font = "SauceCodePro Nerd Font 15";
+        font = "SF Pro Text 19";
         line_height = 4;
         format = ''<b>%s</b>\n%b'';
       };

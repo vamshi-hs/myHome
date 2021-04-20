@@ -15,7 +15,7 @@
 			shellAliases = {
 					conf = "sudo nvim /etc/nixos/configuration.nix";
 					homeConf =  "nvim ~/.config/nixpkgs/home.nix";
-					up = "sudo nixos-rebuild switch";
+					up = "sudo nixos-rebuild switch && notify-send -u low \"Successfully updated\" ";
 					del = "sudo nix-collect-garbage -d";
 					server = "php -S localhost:4000";
           bright = "systemctl --user stop redshift.service";

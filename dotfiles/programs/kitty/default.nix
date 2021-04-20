@@ -9,7 +9,7 @@
                                         			bold_italic_font   = "auto";
                                         			font_size          = "20.0";
                                         			background_opacity = "1.0";
-								include            = "nord.conf";
+								                              include            = "kitty-themes/themes/Tomorrow_Night_Bright.conf";
 								#include            = "./Borland.conf";
                         };
   };

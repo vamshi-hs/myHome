@@ -284,19 +284,20 @@ projects = [
   ]
 gsconfig1 colorizer = (buildDefaultGSConfig colorizer) { gs_cellheight = 60, gs_cellwidth = 210, gs_navigate = myNavigation,gs_font = "xft:SF Pro Text :size=19"}
 gridColorizer :: a -> Bool -> X (String, String)
-gridColorizer _ True = return  ("white" ,"#00aa00")  --"black" 
+gridColorizer _ True = return  ("pink" ,"black")  --"black" #00aa00
 gridColorizer _ False = return ("black" ,"pink")
 
 myKeys :: [(String,X())]
 myKeys =[
        -- ("" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 2))))
-       ("S-<Return>",  runSelectedAction defaultGSConfig {gs_cellheight = 140,gs_colorizer = gridColorizer,  gs_navigate = myNavigation,gs_cellwidth = 220,gs_font = "xft:SF Pro Text :size=23"} myKeys'')
+       ("S-<Return>",  runSelectedAction (gsconfig1 gridColorizer) myKeys'') --defaultGSConfig {gs_cellheight = 140,gs_colorizer = gridColorizer,  gs_navigate = myNavigation,gs_cellwidth = 220,gs_font = "xft:SF Pro Text :size=23"} myKeys'')
        -- ("",  runSelectedAction defaultGSConfig {gs_cellheight = 160,gs_colorizer = gridColorizer,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=23"} myKeys'')
        ,  ("S-<Tab>", treeselectAction tsDefaultConfig)
        -- , ("S-<Tab>" ,  xmonadPromptC myKeys' ultimateXPConfig ) -- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 3))))
        ,  ("S-<Space>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ a,nRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 4))))
        ,  ("M-<Space>" ,  xmonadPromptC myKeys' ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 5))))
-       ,  ("M1-<Space>",  runSelectedAction defaultGSConfig {gs_cellheight = 140,gs_colorizer = gridColorizer,  gs_navigate = myNavigation,gs_cellwidth = 220,gs_font = "xft:SF Pro Text :size=23"} myKeys'')
+       ,  ("M1-<Space>",  runSelectedAction   (gsconfig1 gridColorizer) myKeys'') -- defaultGSConfig {gs_cellheight = 140,gs_colorizer = gridColorizer,  gs_navigate = myNavigation,gs_cellwidth = 220,gs_font = "xft:SF Pro Text :size=23"} myKeys'')
+       ,  ("M-e"       , spawn "emacs")
        -- ,  ("M1-<Space>" ,  xmonadPromptC myKeys'  ultimateXPConfig) -- ultimateXPConfig )-- $ aynRandXPConfig $ unsafePerformIO (getStdRandom (randomR (1, 5))))
        --  , ("M1-<Return>",  spawn myTerminal )
        --  , ("M-<Tab>" ,  spawnSelected' myList)
@@ -363,21 +364,31 @@ myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
           ((0,xK_Escape), cancel)
          ,((0,xK_v), cancel)
          ,((0,xK_space), select)
+         ,((0,xK_Return), select)
          ,((0,xK_slash) , substringSearch myNavigation)
          ,((0,xK_Left)  , move (-1,0)  >> myNavigation)
          ,((0,xK_h)     , move (-1,0)  >> myNavigation)
+         -- ,((0,xK_a)     , move (-1,0)  >> myNavigation)
          ,((0,xK_Right) , move (1,0)   >> myNavigation)
          ,((0,xK_l)     , move (1,0)   >> myNavigation)
+         -- ,((0,xK_d)     , move (1,0)   >> myNavigation)
          ,((0,xK_Down)  , move (0,1)   >> myNavigation)
          ,((0,xK_j)     , move (0,1)   >> myNavigation)
+         -- ,((0,xK_x)     , move (0,1)   >> myNavigation)
          ,((0,xK_Up)    , move (0,-1)  >> myNavigation)
+         -- ,((0,xK_w)    , move (0,-1)  >> myNavigation)
          ,((0,xK_k)    , move (0,-1)  >> myNavigation)
          ,((0,xK_u)     , move (-1,-1) >> myNavigation)
+         -- ,((0,xK_q)     , move (-1,-1) >> myNavigation)
          ,((0,xK_i)     , move (1,-1)  >> myNavigation)
+         -- ,((0,xK_e)     , move (1,-1)  >> myNavigation)
          ,((0,xK_n)     , move (-1,1)  >> myNavigation)
+         -- ,((0,xK_z)     , move (-1,1)  >> myNavigation)
          -- ,((0,xK_u)     , move (1,-1)  >> myNavigation)
          ,((0,xK_m)     , move (1,1)  >> myNavigation)
-         ,((0,xK_c) , setPos (0,0) >> myNavigation)
+         -- ,((0,xK_c)     , move (1,1)  >> myNavigation)
+         ,((0,xK_v) , setPos (0,0) >> myNavigation)
+         -- ,((0,xK_s) , setPos (0,0) >> myNavigation)
          ]
        -- The navigation handler ignores unknown key symbols
        navDefaultHandler = const myNavigation
@@ -420,46 +431,44 @@ myTreeNavigation = M.fromList
 treeselectAction :: TS.TSConfig (X ()) -> X ()
 treeselectAction a = TS.treeselectAction a
   [
-    Node (TS.TSNode "+Run" "Run anything" (return ()))
+    Node (TS.TSNode "+ Run" "Run anything" (return ()))
     [ Node (TS.TSNode "Shell" "Bash shell" ( shellPrompt  xShellXPConfig))[]
     ,  Node (TS.TSNode "RunOrRaise" "Run" ( runOrRaisePrompt  xShellXPConfig))[]
     , Node (TS.TSNode "MainPrompt" "Desktop" (xmonadPromptC myKeys' ultimateXPConfig ))[]
     ]
-  , Node (TS.TSNode "+Asassin" "" (return ()))
+  , Node (TS.TSNode "+ Asassin" "" (return ()))
     [ Node (TS.TSNode "kill" "one window" ( kill))[]
     ,  Node (TS.TSNode "kill" "all windows" ( killAll))[]
     ] 
-  , Node (TS.TSNode "+Most used" "" (return ()))
+  , Node (TS.TSNode "+ Most used" "" (return ()))
    [Node (TS.TSNode "Kitty" "Drop down terminal" (spawn "kitty")) []
   , Node (TS.TSNode "Firefox" "Drop down browser"   (spawn "firefox"))[]
   , Node (TS.TSNode "Emacs" "Drop down editor"   (spawn "emacs"))[]
   , Node (TS.TSNode "sEmacs" "Drop down editor(root)"   (spawn "sudo emacs"))[]
   , Node (TS.TSNode "Spotify" "Drop down spotify"   (namedScratchpadAction myScratchPads "spotify"))[]
     ]
-  , Node(TS.TSNode "+Search" "" (return()))
+  , Node(TS.TSNode "+ Search" "" (return()))
   [ Node (TS.TSNode "Books" "Gen . lib . rus" ( S.promptSearch   xShellXPConfig books))[]
   , Node (TS.TSNode "Store" "Nixos store" (S.promptSearch   xShellXPConfig nixos))[]
   , Node (TS.TSNode "https:" "vanila" (S.promptSearch   xShellXPConfig vanila))[]
   , Node (TS.TSNode "Google" "google search" (S.promptSearch   xShellXPConfig aiGoogle))[]
   , Node (TS.TSNode "Youtube" "videos" (S.promptSearch   xShellXPConfig S.youtube))[]
    ]
-  , Node(TS.TSNode "+QuickLinks" "" (return()))
+  , Node(TS.TSNode "+ QuickLinks" "" (return()))
   [ Node (TS.TSNode "github" "alonzoAlan" ( S.selectSearch github))[]
   , Node (TS.TSNode "gitlab" "vladimirLenin" (S.selectSearch gitlab))[]
   , Node (TS.TSNode "xmonad" "doc extending" (S.selectSearch xmonadDoc))[]
    ]
   , Node(TS.TSNode "+ Utilites" "" (return()))
   [
-   Node (TS.TSNode "Redshift" "brightness" ( runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  redshift))[]
+   Node (TS.TSNode "redshift" "brightness" ( runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  redshift))[]
   , Node (TS.TSNode "bluetooth" "pavucontrol"   (spawn "pavucontrol ; kitty -e bluetoothctl"))[]
   , Node (TS.TSNode "sound" "pulsemixer"   (spawn "kitty -e pulsemixer"))[]
   ]
-  , Node (TS.TSNode "+ Xmonad" "" (return ()))
+  , Node (TS.TSNode " + Xmonad" "" (return ()))
    [  Node (TS.TSNode "restart" "recompile and restart"  (  spawn "xmonad --recompile ; xmonad --restart"))[]
    , Node (TS.TSNode "open" "configure xmonad" (spawn "sudo mv /etc/nixos/dotfiles/programs/desktop/xmonad/xmonad.hs ~/.xmonad/ | sudo emacs ~/.xmonad/xmonad.hs"))[]
    , Node (TS.TSNode "close" "move file" (spawn "sudo mv ~/.xmonad/xmonad.hs /etc/nixos/dotfiles/programs/desktop/xmonad/"))[]
-   -- , Node (TS.TSNode "brightness" "alter the light" (   spawn "sudo emacs /etc/nixos/dotfiles/services/redshift/default.nix"))[]
-   -- , Node (TS.TSNode "Logout" "Logout of xmonad"  ( confirmPrompt xShellXPConfig' "exit" $ io $ exitWith ExitSuccess))[]
     ]
    , Node (TS.TSNode " + Emacs" "" (return ()))
    [  Node (TS.TSNode "config" ""  (  spawn "sudo emacs /etc/nixos/dotfiles/programs/emacs/doom.d/config.el"))[]
@@ -1104,35 +1113,45 @@ windowsList = [
       , ("throwToProject" , shiftToProjectPrompt  xShellXPConfig')
       , ("window", xmonadPromptC windowList xShellXPConfig')
              ]
+              
+gsconfig1' colorizer = (buildDefaultGSConfig colorizer) { gs_cellheight = 160, gs_cellwidth = 200, gs_navigate = myNavigation,gs_font = "xft:SF Pro Text :size=21"}
+gridColorizer1 :: a -> Bool -> X (String, String)
+gridColorizer1 _ True = return  ("white" ,"green")  --"black" #00aa00 
+gridColorizer1 _ False = return ("purple" ,"pink")
+
 myKeys'' :: [(String , X())]
 myKeys'' = [
         ("trivial" , spawn "")
         , ("windows",  goToSelected  defaultGSConfig{gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=17",gs_bordercolor="black"} )--windowPrompt xShellXPConfig Goto allWindows)
         , ("minimize",      withFocused minimizeWindow)
-        , ("settings", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  settings)
+        , ("settings", runSelectedAction  (gsconfig1' gridColorizer) settings) --defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  )
         , ("maximize", withFirstMinimized maximizeWindowAndFocus)
-        , ("redshift", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  redshift)
-        , ("exit" , runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"} exitList )--xmonadPromptC exitList xShellXPConfig')
-        , ("quit", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  quitList)
-        , ("prompts", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  windowsList)
-        , ("search", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  searchPrompts )
-        , ("quickL", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  quickL'')
-        , ("xmonad", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  xmonadList)
+        , ("redshift", runSelectedAction (gsconfig1' gridColorizer)  redshift)-- defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  redshift)
+        , ("exit" , runSelectedAction (gsconfig1' gridColorizer) exitList) --defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"} exitList )--xmonadPromptC exitList xShellXPConfig')
+        -- , ("quit", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  quitList)
+        , ("quit", runSelectedAction   (gsconfig1' gridColorizer) quitList)--defaultGSConfig {gs_cellheight = 160, gs_colorizer=gridColorizer1 ,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  quitList)
+        , ("prompts", runSelectedAction  (gsconfig1' gridColorizer) windowsList)--defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  )
+        , ("search", runSelectedAction (gsconfig1' gridColorizer) searchPrompts) -- defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}   )
+        , ("quickL", runSelectedAction  (gsconfig1' gridColorizer) quickL'') --defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  quickL'')
+        , ("xmonad", runSelectedAction (gsconfig1' gridColorizer) xmonadList )--defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  xmonadList)
         , ("fullS", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) 
         , ("help" , treeselectkeys tsDefaultConfig)
         , ("code" , spawn "emacs")
+        , ("xshell" ,  shellPrompt  xShellXPConfig)
         , ("input", xmonadPromptC inputList xShellXPConfig')
         , ("kitty" ,  namedScratchpadAction myScratchPads "kitty")
         , ("layouts" , xmonadPromptC layoutAction  xShellXPConfig')
         , ("music" ,  namedScratchpadAction myScratchPads "spotify")
+        , ("date" , spawn "notify-send -u low Date \"`date`\" " )
+        , ("update", spawn "sudo nixos-rebuild switch && notify-send -u low \"Successfully updated\" ")
+        , ("del", spawn "sudo nix-collect-garbage -d && notify-send -u low \"Successfully deleted\" ")
       -- , ("play", xmonadPromptC playerctlList ultimateXPConfig)
       -- , ("desktopTree", treeselectAction tsDefaultConfig)
         , ("run" , runOrRaisePrompt xShellXPConfig)
-        , ("repl", runSelectedAction defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  repl)
+        , ("repl", runSelectedAction (gsconfig1' gridColorizer) repl )--defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  )
       -- , ("utilities" , xmonadPromptC  scratchList penUltiXPConfig)
         , ("whatsapp",S.selectSearch whatsapp)
       -- , ("Tutorial" ,  S.selectSearchBrowser "/run/current-system/sw/bin/brave" tutorial)
-      -- , ("xshell" , shellPrompt  xShellXPConfig)
      ]
            
 myKeys' :: [(String , X())]

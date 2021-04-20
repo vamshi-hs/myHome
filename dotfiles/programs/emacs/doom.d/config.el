@@ -49,7 +49,7 @@
 ;; `load-theme' function. This is the default:
 ;; (require 'spaceline-config)
 ;; (spaceline-emacs-theme)
-;; (setq doom-theme 'doom-horizon)
+(setq doom-theme 'doom-palenight)
 ;; (telephone-line-mode 1)
 ;; (require 'modeline-common)
 
@@ -168,6 +168,7 @@
 (setq doom-font (font-spec :family "Source Code Pro Semibold" :size 24)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 22)
       doom-big-font (font-spec :family "Source Code Pro Semibold" :size 30))
+
 
 (setq treemacs-width 25)
 
