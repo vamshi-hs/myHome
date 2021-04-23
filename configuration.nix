@@ -13,6 +13,7 @@ let
     # ipython
     jupyter
     notebook
+    faker
     # jupyter_core
     # other python packages you want
   ]; 
@@ -295,7 +296,9 @@ nixpkgs.config.allowBroken = true;
     # lang
     #ocaml
     ocaml
+    #ocaml
     racket
+    #clojure
     clojure
     clojure-lsp
     leiningen
@@ -320,6 +323,8 @@ nixpkgs.config.allowBroken = true;
    # nodejs
     # Hypertext Preprocessor
     php
+    #ruby
+    ruby
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

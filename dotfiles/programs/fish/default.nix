@@ -1,7 +1,7 @@
 { pkgs, config, lib, inputs, ... }:{
    home-manager.users.vamshi.programs.fish = {
   			enable = true;
-      promptInit = "bat /sys/class/power_supply/BAT0/capacity 
+      promptInit = "
 					### AUTOCOMPLETE AND HIGHLIGHT COLORS ###
 					set PATH $PATH /nix/store/nlgwv0h3pqrng56gjfzi4v5bpalwjn2y-system-path/bin
 					set fish_color_normal brcyan

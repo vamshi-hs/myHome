@@ -387,7 +387,7 @@ myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
          -- ,((0,xK_u)     , move (1,-1)  >> myNavigation)
          ,((0,xK_m)     , move (1,1)  >> myNavigation)
          -- ,((0,xK_c)     , move (1,1)  >> myNavigation)
-         ,((0,xK_v) , setPos (0,0) >> myNavigation)
+         ,((0,xK_c) , setPos (0,0) >> myNavigation)
          -- ,((0,xK_s) , setPos (0,0) >> myNavigation)
          ]
        -- The navigation handler ignores unknown key symbols
@@ -477,6 +477,7 @@ treeselectAction a = TS.treeselectAction a
    , Node (TS.TSNode " + Nixos" "" (return ()))
    [  Node (TS.TSNode "config" ""  (spawn "sudo emacs /etc/nixos/configuration.nix"))[]
    , Node (TS.TSNode "flake" "" (spawn "sudo emacs /etc/nixos/flake.nix"))[]
+   , Node (TS.TSNode "programs" "" (spawn "sudo emacs /etc/nixos/dotfiles/programs/programs.nix"))[]
     ]
    , Node (TS.TSNode " + Exit" "" (return ()))
    [  Node (TS.TSNode "Shutdown" "switch off the computer"  ( confirmPrompt xShellXPConfig' "shutdown" $ spawn "poweroff"))[]
@@ -1135,7 +1136,7 @@ myKeys'' = [
         , ("quickL", runSelectedAction  (gsconfig1' gridColorizer) quickL'') --defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  quickL'')
         , ("xmonad", runSelectedAction (gsconfig1' gridColorizer) xmonadList )--defaultGSConfig {gs_cellheight = 160,  gs_navigate = myNavigation,gs_cellwidth = 310,gs_font = "xft:SF Pro Text :size=19"}  xmonadList)
         , ("fullS", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) 
-        , ("help" , treeselectkeys tsDefaultConfig)
+        -- , ("help" , treeselectkeys tsDefaultConfig)
         , ("code" , spawn "emacs")
         , ("xshell" ,  shellPrompt  xShellXPConfig)
         , ("input", xmonadPromptC inputList xShellXPConfig')
