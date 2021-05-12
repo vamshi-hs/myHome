@@ -206,16 +206,18 @@ nixpkgs.config.allowBroken = true;
   services.upower.enable = true;
   systemd.services.upower.enable = true;
   sound.enable = true;
+  services.blueman.enable = true;
+  # nixpkgs.config.pulseaudio = true;
   hardware.pulseaudio = {
                enable = true;
                extraModules = [ pkgs.pulseaudio-modules-bt ];
                package = pkgs.pulseaudioFull;
                support32Bit = true; # Steam
-               extraConfig = ''
-               load-module module-bluetooth-policy auto_switch=2
-	       load-module module-switch-on-connect
-	       load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
-                 '';
+               # extraConfig = ''7
+               # load-module module-bluetooth-policy auto_switch=2
+	             # load-module module-switch-on-connect
+	             # load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1
+               #   '';
   };
 # Music daemon, can be accessed through mpc or an other client
    services.mpd = {
@@ -258,8 +260,8 @@ nixpkgs.config.allowBroken = true;
     playerctl
     konsole
     # pavucontrol
-    blueman
-    pulsemixer
+    # blueman
+    #pulsemixer
     brightnessctl
     htop
     # git
@@ -325,6 +327,8 @@ nixpkgs.config.allowBroken = true;
     php
     #ruby
     ruby
+    #tcl
+    tcl
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

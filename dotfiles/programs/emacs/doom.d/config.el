@@ -165,10 +165,13 @@
 ;; (setq doom-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 20)
 ;; doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
 ;; doom-big-font (font-spec :family "SauceCodePro Nerd Font Mono" :size 24))
-(setq doom-font (font-spec :family "Source Code Pro Semibold" :size 24)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 22)
-      doom-big-font (font-spec :family "Source Code Pro Semibold" :size 30))
+;; (setq doom-font (font-spec :family "Source Code Pro Semibold" :size 24)
+;;       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 22)
+;;       doom-big-font (font-spec :family "Source Code Pro Semibold" :size 30))
 
+(setq doom-font (font-spec :family "mononoki Nerd Font Mono" :size 24)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 22)
+      doom-big-font (font-spec :family "mononoki Nerd Font Mono" :size 30))
 
 (setq treemacs-width 25)
 

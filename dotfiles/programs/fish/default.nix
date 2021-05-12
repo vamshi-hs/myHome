@@ -23,7 +23,7 @@
           c = "clear";
           e = "exit";
           ls = "exa";
-          ll = "exa -l";
+          ll = "exa -l -g --icons";
 			};
    };
    # xdg.configFile."fish/functions/fish_prompt.fish".text = customPlugins.prompt;

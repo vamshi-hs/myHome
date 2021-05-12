@@ -17,7 +17,8 @@
 		};
 		brightness  = {
       day = "0.72";
-			night = "0.39";
+			# night = "0.74";
+			night = "0.34";
     };
   };
 }

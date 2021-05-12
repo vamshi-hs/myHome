@@ -18,6 +18,8 @@ home-manager.users.vamshi.home.packages = with pkgs;
           #rust
           exa
           bat
+          peco
+          ghq
           rsclock
           ripgrep
           tokei
@@ -59,6 +61,7 @@ home-manager.users.vamshi.home.packages = with pkgs;
             bison
             flex
             killall
+            # kaggle  
             # ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
             #   # epkgs.vterm
 		        #   # epkgs.evil
