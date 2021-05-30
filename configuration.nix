@@ -11,6 +11,7 @@ let
     numpy
     matplotlib
     # ipython
+    mysql-connector
     jupyter
     notebook
     faker
@@ -95,7 +96,7 @@ in
 		pkgs.emacs-all-the-icons-fonts
     pkgs.iosevka
   ];
-nixpkgs.config.allowBroken = true;
+  # nixpkgs.config.allowBroken = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
   services.devmon.enable = true;
@@ -119,11 +120,11 @@ nixpkgs.config.allowBroken = true;
                                                                       Option "FingerHigh" "70"
                                                                       '';
 		  };
-       displayManager = {
-			 defaultSession = "none+xmonad";
-		      	autoLogin.enable = true;
-          		autoLogin.user = "vamshi";
-			  };
+        displayManager = {
+			  defaultSession = "none+xmonad";
+		       	autoLogin.enable = true;
+           		autoLogin.user = "vamshi";
+			   };
 /*
           lightdm = {
             enable = true;
@@ -148,14 +149,16 @@ nixpkgs.config.allowBroken = true;
                                 '';
                         };
                 }; */
+      # desktopManager.cinnamon.enable = true;
+      desktopManager.wallpaper.mode = "scale";
        windowManager.xmonad = {
                                enable = true;
+		        };
 		       # enableContribAndExtras = true;
 			      /*
 		 #       extraPackages =  haskellPackages: [
 		 #                          haskellPackages.xmonad-wallpaper
 		 #  		 ]; */
-		        };
       #  windowManager.awesome = {
       #    enable = true;
       #    luaModules = with pkgs.luaPackages; [
@@ -164,6 +167,9 @@ nixpkgs.config.allowBroken = true;
       # ];
       #  };
   };
+
+   xdg.portal.enable = true;
+   services.flatpak.enable = true;
 
   # Enable the GNOME 3 Desktop Environment.
   # services.xserver.enable = true;
@@ -231,41 +237,69 @@ nixpkgs.config.allowBroken = true;
        '';
     };
 
+  services.mysql.enable = true;
+  services.mysql.package = pkgs.mariadb;
+  services.longview.mysqlPasswordFile = "/run/keys/mysql.password";
+
+# nixpkgs.config = {
+
+# packageOverrides = pkgs: rec{
+
+# dmenu = pkgs.dmenu.override {
+
+#   patches = [ ./dmenu-patches/gruvbox.diff
+#               ./dmenu-patches/grid.diff
+#               ./dmenu-patches/lineheight.diff
+#               # ./dmenu-patches/center.diff
+#               # ./dmenu-patches/dynamicdmenu.diff
+#               # ./dmenu-patches/listfullwidth.diff
+#               # ./dmenu-patches/gridnav.diff
+#               # ./dmenu-patches/mouseSupport.diff
+#               # ./dmenu-patches/noSort.diff
+#               # ./dmenu-patches/xyw.diff
+#             ];
+
+# };
+# };
+# };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # keyboard
     xorg.xkbcomp
     xorg.xmodmap
+    #internet
     wget 
+    #wallpaper setter
     feh
+    # image viewer
+    sxiv
+    #audio
     acpi
-    dmenu
-    unzip
-    neofetch
+    #run prompt
+    # dmenu
+    # kdenlive
     kdenlive
     libsForQt5.kdenlive
     libsForQt512.kdenlive
     libsForQt514.kdenlive
-    sxiv
-    miraclecast
+    #music
     spotify
-    python-with-my-packages
-    wmctrl
-    moc
-    hicolor-icon-theme
-    libnotify
+    #appearence
     lxappearance
+    hicolor-icon-theme
     dracula-theme
-    gcc
-    playerctl
-    konsole
-    # pavucontrol
-    # blueman
+    # utilities
     #pulsemixer
-    brightnessctl
     htop
-    # git
+    unzip
     okular
+    wmctrl
+    neofetch
+    playerctl
+    brightnessctl
+    # packages for lang
+    python-with-my-packages
     (emacsWithPackages (epkgs: with emacsPackages; [
        pdf-tools
      ]))
@@ -294,11 +328,13 @@ nixpkgs.config.allowBroken = true;
 
   # ]))
     neovim
-    # firefox
     # lang
+    # c compiler
+    gcc
     #ocaml
     ocaml
     #ocaml
+    # racket
     racket
     #clojure
     clojure
@@ -309,7 +345,6 @@ nixpkgs.config.allowBroken = true;
     cabal2nix
     ghc
     haskellPackages.xmobar
-    xdotool
     haskellPackages.ghcid
     haskellPackages.ghcide
     haskellPackages.Cabal_3_2_1_0
@@ -329,6 +364,11 @@ nixpkgs.config.allowBroken = true;
     ruby
     #tcl
     tcl
+    xdotool
+    #unknown
+    miraclecast
+    libnotify
+    moc
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

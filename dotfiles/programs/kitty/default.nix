@@ -10,7 +10,7 @@
                                         			bold_italic_font   = "auto";
                                         			font_size          = "22.0";
                                         			background_opacity = "1.0";
-								                              include            = "kitty-themes/themes/Tomorrow_Night_Bright.conf";
+								                              include            = "kitty-themes/themes/Dracula.conf";
 								#include            = "./Borland.conf";
                         };
   };

@@ -16,7 +16,7 @@
 			night = 3400;
 		};
 		brightness  = {
-      day = "0.72";
+      day = "0.52";
 			# night = "0.74";
 			night = "0.34";
     };

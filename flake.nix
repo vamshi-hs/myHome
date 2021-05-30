@@ -6,14 +6,15 @@
          nix-doom-emacs.url = "github:vlaci/nix-doom-emacs";
          # lambda-launcher.url = "github:balsoft/lambda-launcher";
          home-manager.url = "github:nix-community/home-manager";
+         dmenu = { url = "github:michaelforney/dmenu"; flake = false; };
   };
-  outputs = {home-manager,nix-doom-emacs,self, nixpkgs}: {
+  outputs = {dmenu,home-manager,nix-doom-emacs,self, nixpkgs}: {
      # replace 'joes-desktop' with your hostname here.
      nixosConfigurations.cosmos = nixpkgs.lib.nixosSystem {
        system = "x86_64-linux";
        modules = [ 
- 		  #   ./dotfiles/services/picom
- 		  #   ./dotfiles/services/statusWatcher
+ 		    ./dotfiles/services/picom
+ 		    # ./dotfiles/services/statusWatcher
         ./dotfiles/services/redshift
         ./dotfiles/services/cbatticon
         ./dotfiles/services/dunst
@@ -24,7 +25,9 @@
     # ./dotfiles/services/taffybar
     ./dotfiles/programs/programs.nix
       ./dotfiles/programs/desktop
+      ./dotfiles/programs/obs-studio
       ./dotfiles/programs/man
+      ./dotfiles/programs/dmenu
       # ./dotfiles/programs/gtk
       #./dotfiles/programs/emacs
     ./dotfiles/programs/fish

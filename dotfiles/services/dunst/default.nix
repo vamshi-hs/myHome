@@ -21,7 +21,9 @@
         transparency = 0;
         padding = 16;
         horizontal_padding = 16;
-        font = "SF Pro Text 19";
+        # font = "SF Pro Text 19";
+        font = "Ubuntu 21";
+        # font = "xft:Ubuntu :weight=bold:pixelsize=43:antialias=true:hinting=true"; # "SF Pro Text 19";
         line_height = 4;
         format = ''<b>%s</b>\n%b'';
       };

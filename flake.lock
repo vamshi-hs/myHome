@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "dmenu": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1492360130,
+        "narHash": "sha256-3mxbuqmOTMDT6DRfkcRF/qdnN73NtDc/tHF5asGWSJI=",
+        "owner": "michaelforney",
+        "repo": "dmenu",
+        "rev": "f385d9d18813071b4b4257bf8d4d572daeda0e70",
+        "type": "github"
+      },
+      "original": {
+        "owner": "michaelforney",
+        "repo": "dmenu",
+        "type": "github"
+      }
+    },
     "doom-emacs": {
       "flake": false,
       "locked": {
@@ -357,6 +373,7 @@
     },
     "root": {
       "inputs": {
+        "dmenu": "dmenu",
         "home-manager": "home-manager",
         "nix-doom-emacs": "nix-doom-emacs",
         "nixpkgs": "nixpkgs_3"

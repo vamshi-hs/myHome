@@ -1,25 +1,34 @@
 { pkgs, config, lib, inputs, ... }: {
 home-manager.users.vamshi.home.packages = with pkgs;
-    [ 	    vlc
-  	      obs-studio
+  [
+          # media player
+          vlc
+          #screenshot
           scrot
-          tree
+          tmux
+          #file manager 
           pcmanfm
           udiskie
+          #image editor
           gimp
-          vscode
-          tmux
+          #browser
           brave
             # taffybar
             # xfce.xfce4-vala-panel-appmenu-plugin
+            # sound
             pavucontrol
-            rofi
-            tint2
+          #tui utilities
+            pipes
+            cmatrix
+          tree
+            fzf
+          rofi
           #rust
           exa
           bat
           peco
           ghq
+          kronometer
           rsclock
           ripgrep
           tokei
@@ -33,35 +42,50 @@ home-manager.users.vamshi.home.packages = with pkgs;
             # nushell
             # pantheon.elementary-dock
             glib
-            dzen2
-            fzf
             clipmenu
+            # windows alternatives
+            wine
+            winetricks
             unrar
             libreoffice
+            #appearence
             papirus-icon-theme
             materia-theme
             numix-solarized-gtk-theme
             mojave-gtk-theme
-            wpa_supplicant_gui
-            xmenu
+		        qogir-icon-theme
+            #unknown
             xorg.xwininfo
             xorg.xev
-		qogir-icon-theme
+            pipewire
+
+            # wallpaper setter
+            xwallpaper
+            nitrogen
+            #image editor
+            gthumb
             # binutils-unwrapped
             # pkg-config
             # gobjectIntrospection
         # lambda-launcher
 		# plank
-    redshift-plasma-applet
-    # latte-dock
-            tcsh
-            pipes
-            cmatrix
+    
+    # compiler design
             # c
             bison
             flex
             killall
-            # kaggle  
+            # bootable disk
+            unetbootin
+                nwipe
+            # gui utilities
+            gparted
+          # pressed keys on screen
+          screenkey
+          xclip
+          #transmission
+          transmission
+              # kaggle  
             # ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
             #   # epkgs.vterm
 		        #   # epkgs.evil
@@ -69,7 +93,5 @@ home-manager.users.vamshi.home.packages = with pkgs;
             #   epkgs.ccls
             #   epkgs.lsp-haskell
             # ]))
-    # ]
-    # ++ lib.optionals config.deviceSpecific.goodMachine [
     ];
 }

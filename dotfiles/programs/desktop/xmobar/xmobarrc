@@ -45,5 +45,7 @@ Config { font    = "xft:Ubuntu :weight=bold:pixelsize=17:antialias=true:hinting=
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <fc=#ffffff> <fn=2> </fn> </fc> <fc=#666666>  |</fc> %UnsafeStdinReader% }{ <fc=#666666> |</fc>  <fc=#ff6c6b> %memory% </fc> <fc=#666666> |</fc>  <fc=#b3afc2> %battery%  </fc><fc=#666666> |</fc> <fc=#46d9ff> %date%  </fc>"
+       , template = "  <icon=haskell_20.xpm/>  <fc=#666666>  |</fc> %UnsafeStdinReader% }{ <fc=#666666> |</fc>  <fc=#dfaf6b> %memory% </fc> <fc=#666666> |</fc>  <fc=#b3afc2> %battery%  </fc><fc=#666666> |</fc> <fc=#cff209> %date%  </fc>"
+       
+       -- 
        }

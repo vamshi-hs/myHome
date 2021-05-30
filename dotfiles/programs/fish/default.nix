@@ -20,6 +20,7 @@
 					server = "php -S localhost:4000";
           bright = "systemctl --user stop redshift.service";
           dark = "systemctl --user restart redshift.service";
+          wifi = "systemctl start wpa_supplicant.service";
           c = "clear";
           e = "exit";
           ls = "exa";

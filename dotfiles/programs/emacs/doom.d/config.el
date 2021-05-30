@@ -49,7 +49,7 @@
 ;; `load-theme' function. This is the default:
 ;; (require 'spaceline-config)
 ;; (spaceline-emacs-theme)
-(setq doom-theme 'doom-palenight)
+(setq doom-theme 'doom-dracula)
 ;; (telephone-line-mode 1)
 ;; (require 'modeline-common)
 
